@@ -60,7 +60,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/valheim-food.html'
+      template: './src/valheim-food.html',
+      //filename: 'valheim-food.html'
     }),
     new ForkTsCheckerWebpackPlugin(),
     new CopyPlugin({

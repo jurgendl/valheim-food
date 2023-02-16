@@ -72,27 +72,29 @@ export class Component {
 	table!: Tabulator;
 
 	fetchDataAgain(): void {
-		fetch('assets/valheim-food.json')
+		fetch('assets/valheim-food-v1.json')
 			.then((response: Response) => response.json() as Promise<ValheimFood>)
-			.then(this.app);
+			.then(d => {
+				this.app(d);
+			});
 	}
 
 	init(): void {
 		($('.selectpicker') as any).selectpicker();
 
-		try {
-			const valheimFood = window.localStorage.getItem('valheim-food');
-			if (valheimFood && valheimFood != undefined && valheimFood != null) {
-				const __data = JSON.parse(valheimFood);
-				const test = __data.headers;
-				this.app(__data);
-			} else {
+		//try {
+			//const valheimFood = window.localStorage.getItem('valheim-food-v1');
+			//if (valheimFood && valheimFood != undefined && valheimFood != null) {
+			//	const __data = JSON.parse(valheimFood);
+			//	const test = __data.headers;
+			//	this.app(__data);
+			//} else {
 				this.fetchDataAgain();
-			}
-		} catch (e) {
-			console.error(e);
-			this.fetchDataAgain();
-		}
+			//}
+		//} catch (e) {
+		//	console.error(e);
+		//	this.fetchDataAgain();
+		//}
 	}
 
 	buildResources(data: ValheimFood) {
@@ -524,20 +526,20 @@ export class Component {
 
 	app($$data: ValheimFood): void {
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
-		const _this = this;
 		console.log($$data);
-		window.localStorage.setItem('valheim-food', JSON.stringify($$data));
-		_this.buildResources($$data);
-		_this.buildResourceCols($$data);
-		_this.buildResourceChecks($$data);
-		$(function () {
-			setTimeout(() => {
-				_this.buildResourceStyles($$data);
-			}, 3 * 1000);
-		});
-		_this.buildTableDate($$data);
-		_this.buildTableFilters($$data);
-		_this.buildTable($$data);
-		_this.buildDataReset($$data);
+		window.localStorage.setItem('valheim-food-v1', JSON.stringify($$data));
+		this.buildResources($$data);
+		this.buildResourceCols($$data);
+		this.buildResourceChecks($$data);
+		//$(function () {
+			//setTimeout(() => {
+
+			//}, 3 * 1000);
+		//});
+		this.buildTableDate($$data);
+		this.buildTableFilters($$data);
+		this.buildTable($$data);
+		this.buildDataReset($$data);
+		this.buildResourceStyles($$data);
 	}
 }
