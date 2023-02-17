@@ -2,7 +2,14 @@
 // npm install tabulator-tables --save
 // npm i --save-dev @types/tabulator-tables
 
-import {CellComponent, ColumnDefinition, Options, RowComponent, TabulatorFull as Tabulator} from 'tabulator-tables';
+import {
+	CellComponent,
+	ColumnDefinition,
+	Filter,
+	Options,
+	RowComponent,
+	TabulatorFull as Tabulator
+} from 'tabulator-tables';
 
 
 export enum FoodType {
@@ -15,7 +22,7 @@ export enum FoodType {
 export interface Food {
 	"id": number;
 	"name": string;
-	"tier": number;
+	"tier": 1 | 2 | 3 | 4 | 5 | 6;
 	"starred": boolean;
 	"hp": number;
 	"stamina": number;
@@ -36,24 +43,24 @@ export interface ValheimFood {
 export interface FoodRow {
 	id: number;
 	name: string;
-	tier: number;
+	tier: 1 | 2 | 3 | 4 | 5 | 6;
 	starred: boolean;
 	hp: number;
 	stamina: number;
 	eitr: number;
-	type: string;
+	type: 'R' | 'Y' | 'W' | 'B';
 	hpPerSecond: number;
 	durationInMinutes: number;
 }
 
-export interface ColumnFilter {
-	field: string;
-	type: string;
-	value: string | number | string[] | number[] | boolean | undefined;
-}
-
 // noinspection TypeScriptUnresolvedFunction
 export class Component {
+	version = '1.2';
+
+	localStorageJsonName = "valheim-food";
+
+	localStorageVersionName = "valheim-food-version";
+
 	tierColors = new Map<number, string>([
 		[1, '#f7f781'],
 		[2, '#bbe33d'],
@@ -71,30 +78,51 @@ export class Component {
 
 	table!: Tabulator;
 
+	init(): void {
+		($('.selectpicker') as any).selectpicker();
+
+		try {
+			const localStorageJsonNameValue = window.localStorage.getItem(this.localStorageJsonName);
+			const localStorageVersionNameValue = window.localStorage.getItem(this.localStorageVersionName);
+			if (localStorageJsonNameValue && localStorageVersionNameValue == this.version) {
+				const __data = JSON.parse(localStorageJsonNameValue);
+				const test = __data.headers;
+				this.app(__data);
+			} else {
+				this.fetchDataAgain();
+			}
+		} catch (e) {
+			console.error(e);
+			this.fetchDataAgain();
+		}
+	}
+
 	fetchDataAgain(): void {
-		fetch('assets/valheim-food-v1.json')
+		fetch('assets/valheim-food.json')
 			.then((response: Response) => response.json() as Promise<ValheimFood>)
 			.then(d => {
 				this.app(d);
 			});
 	}
 
-	init(): void {
-		($('.selectpicker') as any).selectpicker();
+	app($$data: ValheimFood): void {
+		// eslint-disable-next-line @typescript-eslint/no-this-alias
+		console.log($$data);
+		window.localStorage.setItem(this.localStorageJsonName, JSON.stringify($$data));
+		window.localStorage.setItem(this.localStorageVersionName, this.version);
+		this.buildResources($$data);
+		this.buildResourceCols($$data);
+		this.buildResourceChecks($$data);
+		//$(function () {
+		//setTimeout(() => {
 
-		//try {
-			//const valheimFood = window.localStorage.getItem('valheim-food-v1');
-			//if (valheimFood && valheimFood != undefined && valheimFood != null) {
-			//	const __data = JSON.parse(valheimFood);
-			//	const test = __data.headers;
-			//	this.app(__data);
-			//} else {
-				this.fetchDataAgain();
-			//}
-		//} catch (e) {
-		//	console.error(e);
-		//	this.fetchDataAgain();
-		//}
+		//}, 3 * 1000);
+		//});
+		this.buildTableDate($$data);
+		this.buildTableFilters($$data);
+		this.buildTable($$data);
+		this.buildDataReset($$data);
+		this.buildResourceStyles($$data);
 	}
 
 	buildResources(data: ValheimFood) {
@@ -108,7 +136,7 @@ export class Component {
 	buildResourceCols(data: ValheimFood) {
 		for (const resource of this.resources) {
 			let colorClass = '';
-			data.resourceTiers.forEach(function (resourceTier, i) {
+			data.resourceTiers.forEach((resourceTier, i) => {
 				for (const rt of resourceTier) {
 					if (resource == rt) {
 						colorClass = data.tiers[i];
@@ -116,7 +144,7 @@ export class Component {
 				}
 			});
 			if (colorClass == '') {
-				data.resourceTiers.forEach(function (resourceTier, i) {
+				data.resourceTiers.forEach((resourceTier, i) => {
 					for (const rt of resourceTier) {
 						if (resource == rt) {
 							colorClass = data.tiers[i];
@@ -142,15 +170,10 @@ export class Component {
 			//
 			$('#resourceChecks').append(template);
 			//
-			$('#check_' + fixedName).click(function () {
-				const checked = $(this).is(':checked');
+			$('#check_' + fixedName).click(() => {
 				if (resource) {
-					const el: HTMLElement | null = document.getElementById("style-" + resource);
-					if (el) {
-						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-						// @ts-ignore
-						el.disabled = checked;
-					}
+					const checked = $(this).is(':checked');
+					(document.getElementById("style-" + resource) as any).disabled = checked;
 				}
 			});
 		}
@@ -162,17 +185,27 @@ export class Component {
 			style.id = "style-" + resource;
 			style.innerHTML = "[tabulator-field='" + resource + "'] { display: none !important; }";
 			document.body.appendChild(style);
-			const el: HTMLElement | null = document.getElementById("style-" + resource);
-			if (el) {
-				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-				// @ts-ignore
-				el.disabled = true;
-			}
+			(document.getElementById("style-" + resource) as any).disabled = true;
 		}
 	}
 
 	buildTableDate(data: ValheimFood) {
 		for (const [name, food] of Object.entries(data.food)) {
+			let ft: 'R' | 'Y' | 'W' | 'B';
+			switch (food.type) {
+				case FoodType.blue:
+					ft = 'B';
+					break;
+				case FoodType.red:
+					ft = 'R';
+					break;
+				case FoodType.white:
+					ft = 'W';
+					break;
+				case FoodType.yellow:
+					ft = 'Y';
+					break;
+			}
 			const row: FoodRow = {
 				id: food.id,
 				name: food.name,
@@ -181,7 +214,7 @@ export class Component {
 				hp: food.hp,
 				stamina: food.stamina,
 				eitr: food.eitr,
-				type: food.type.replace("white", "W").replace("yellow", "Y").replace("red", "R").replace("blue", "B"),
+				type: ft,
 				hpPerSecond: food.hpPerSecond,
 				durationInMinutes: food.durationInMinutes
 			};
@@ -195,8 +228,6 @@ export class Component {
 	}
 
 	buildTableFilters(data: ValheimFood) {
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
-		const _this = this;
 		const nameFilter: JQuery<HTMLElement> = $('#filter-name');
 		const tierFilter: JQuery<HTMLElement> = $('#filter-tier');
 		const starredFilter: JQuery<HTMLElement> = $('#filter-starred');
@@ -208,82 +239,85 @@ export class Component {
 		const durationFilter: JQuery<HTMLInputElement> = $('#filter-duration');
 
 		//
-		function clearFiltering() {
-			_this.table.clearFilter(true);
+		const clearFiltering = () => {
+			//
+			this.table.clearFilter(true);
+			//
 			for (let i = 0; i < Object.keys(data.food).length; i++) {
-				_this.table.deselectRow(i);
+				this.table.deselectRow(i);
 			}
+			//
 			$('#totalPoints').val('');
-			for (const resource of _this.resources) {
+			//
+			for (const resource of this.resources) {
 				$("#check_" + resource.replace(' ', '_')).prop('checked', true);
 			}
 		}
 
 		//
-		function updateFilter() {
+		const updateFilter = () => {
 			clearFiltering();
 			//
-			const f: ColumnFilter[] = [];
+			const filters: Filter[] = [];
 			//
 			const nameFilterVal: string = nameFilter.val() as string;
 			if (nameFilterVal && nameFilterVal.length > 0) {
-				const colFilters: ColumnFilter[] = nameFilterVal.split(',').map((x: string) => x.trim())
+				const colFilters: Filter[] = nameFilterVal.split(',').map((x: string) => x.trim())
 					.map((x: string) => {
 						return {"field": "name", "type": "like", "value": x};
 					});
-				colFilters.forEach(colFilter => f.push(colFilter));
+				colFilters.forEach(colFilter => filters.push(colFilter));
 			}
 			const tierFilterVal: string[] = tierFilter.val() as string[];
 			if (tierFilterVal && tierFilterVal.length > 0) {
-				f.push({
+				filters.push({
 					field: "tier", type: "in", value: tierFilterVal.map((str: string) => parseInt(str))
 				});
 			}
 			const starredFilterVal: string[] = starredFilter.val() as string[];
 			if (starredFilterVal && starredFilterVal.length == 1) {
 				if (starredFilterVal[0] == "y") {
-					f.push({field: "starred", type: "=", value: true});
+					filters.push({field: "starred", type: "=", value: true});
 				} else {
-					f.push({field: "starred", type: "=", value: false});
+					filters.push({field: "starred", type: "=", value: false});
 				}
 			}
 			const hpFilterVal: string = hpFilter.val() as string;
 			if (hpFilterVal && hpFilterVal.length > 0) {
-				f.push({field: "hp", type: ">=", value: hpFilterVal});
+				filters.push({field: "hp", type: ">=", value: hpFilterVal});
 			}
 			const staminaFilterVal: string = staminaFilter.val() as string;
 			if (staminaFilterVal && staminaFilterVal.length > 0) {
-				f.push({field: "stamina", type: ">=", value: staminaFilterVal});
+				filters.push({field: "stamina", type: ">=", value: staminaFilterVal});
 			}
 			const eitrFilterVal: string = eitrFilter.val() as string;
 			if (eitrFilterVal && eitrFilterVal.length > 0) {
-				f.push({field: "eitr", type: ">=", value: eitrFilterVal});
+				filters.push({field: "eitr", type: ">=", value: eitrFilterVal});
 			}
 			const typeFilterVal: string[] = typeFilter.val() as string[];
 			if (typeFilterVal && typeFilterVal.length > 0) {
-				f.push({field: "type", type: "in", value: typeFilterVal});
+				filters.push({field: "type", type: "in", value: typeFilterVal});
 			}
 			const hpsFilterVal: string = hpsFilter.val() as string;
 			if (hpsFilterVal && hpsFilterVal.length > 0) {
-				f.push({field: "hpPerSecond", type: ">=", value: hpsFilterVal});
+				filters.push({field: "hpPerSecond", type: ">=", value: hpsFilterVal});
 			}
 			const durationFilterVal: string = durationFilter.val() as string;
 			if (durationFilterVal && durationFilterVal.length > 0) {
-				f.push({field: "durationInMinutes", type: ">=", value: durationFilterVal});
+				filters.push({field: "durationInMinutes", type: ">=", value: durationFilterVal});
 			}
-			if (f.length > 0) {
-				_this.table.setFilter(f);
+			if (filters.length > 0) {
+				this.table.setFilter(filters);
 			}
 		}
 
 		//
-		const filterEl: HTMLElement = <HTMLElement>document.getElementById("filter");
-		filterEl.addEventListener("click", function () {
+		document.getElementById("filter")?.addEventListener("click", (event: MouseEvent) => {
 			updateFilter();
 		});
+
 		//
-		const filterClearEl: HTMLElement = <HTMLElement>document.getElementById("filter-clear");
-		filterClearEl.addEventListener("click", function () {
+		document.getElementById("filter-clear")?.addEventListener("click", (event: MouseEvent) => {
 			nameFilter.val('');
 			(tierFilter as any).selectpicker('val', ['1', '2', '3', '4', '5', '6']);
 			(starredFilter as any).selectpicker('val', ['y', 'n']);
@@ -299,19 +333,16 @@ export class Component {
 	}
 
 	buildTable(data: ValheimFood) {
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
-		const _this = this;
-
 		const columDefs: ColumnDefinition[] = [];
 		columDefs.push({
 			title: "Name",
 			field: "name",
 			frozen: true,
 			/*headerFilter: "input",*/
-			formatter: function (cell: CellComponent, formatterParams: any) {
+			formatter: (cell: CellComponent, formatterParams: any) => {
 				const dat: FoodRow = cell.getData() as FoodRow;
 				const value: number = cell.getValue();
-				const color: string | undefined = _this.tierColors.get(dat.tier);
+				const color: string | undefined = this.tierColors.get(dat.tier);
 				let tt = "";
 				const food: Food | undefined = data.food[value];
 				if (food) {
@@ -339,10 +370,10 @@ export class Component {
 			hozAlign: "center",
 			/* headerFilter: "list",*/
 			/* headerFilterParams: { valuesLookup: true, clearable: true }, */
-			formatter: function (cell: CellComponent, formatterParams: any) {
+			formatter: (cell: CellComponent, formatterParams: any) => {
 				const dat: FoodRow = cell.getData() as FoodRow;
 				const value: number = cell.getValue();
-				return "<span style='background-color:" + _this.tierColors.get(dat.tier) + ";display:block;width:100%;height:100%' title='meadows'>" + value + "</span>";
+				return "<span style='background-color:" + this.tierColors.get(dat.tier) + ";display:block;width:100%;height:100%' title='meadows'>" + value + "</span>";
 			}
 		});
 		infoGroupColumDef.columns?.push({
@@ -386,7 +417,7 @@ export class Component {
 			hozAlign: "center",
 			/* headerFilter: "list",*/
 			/* headerFilterParams: { valuesLookup: true, clearable: true },*/
-			formatter: function (cell: CellComponent, formatterParams: any) {
+			formatter: (cell: CellComponent, formatterParams: any) => {
 				const value: string = cell.getValue();
 				if (value == "Y") {
 					return "<span title='yellow' style='background-color:#ffff84;display:block;width:100%;height:100%'>Y</span>";
@@ -451,10 +482,10 @@ export class Component {
 		this.table = new Tabulator("#valheim-food-table", options);
 		//
 		//const callBack: (data: any[], rows: RowComponent[]) => void = (data, rows) => {/**/};
-		//_this.table.on("rowSelectionChanged", callBack);
+		//this.table.on("rowSelectionChanged", callBack);
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
-		_this.table.on("rowSelectionChanged", (data: any[], rows: RowComponent[]) => {
+		this.table.on("rowSelectionChanged", (data: any[], rows: RowComponent[]) => {
 			if (rows.length == 0) {
 				$('#totalPoints').val('');
 			} else if (rows.length > 3) {
@@ -475,37 +506,30 @@ export class Component {
 					dur.push(dat.durationInMinutes);
 					totalScore += (dat.hp + dat.stamina + dat.eitr) * dat.durationInMinutes;
 				}
-				// eslint-disable-next-line prefer-spread
-				if (Math.min.apply(Math, dur) == Math.max.apply(Math, dur)) {
-					// eslint-disable-next-line prefer-spread
-					$('#totalPoints').val('SELECTED TOTAL: HP=' + totalHP + ' +' + totalHPs + '/s, Stamina=' + totalStamina + ', Eitr=' + totalEitr + ' [' + Math.min.apply(Math, dur) + 'm] > ' + totalScore + ' score');
-				} else {
-					// eslint-disable-next-line prefer-spread
-					$('#totalPoints').val('SELECTED TOTAL: HP=' + totalHP + ' +' + totalHPs + '/s, Stamina=' + totalStamina + ', Eitr=' + totalEitr + ' [' + Math.min.apply(Math, dur) + '-' + Math.max.apply(Math, dur) + 'm] > ' + totalScore + ' score');
-				}
+				const min = Math.min.apply(null, dur);
+				const max = Math.max.apply(null, dur);
+				console.log(dur, min, max);
+				$('#totalPoints').val('SELECTED TOTAL: HP=' + totalHP + ' +' + totalHPs + '/s, Stamina=' + totalStamina + ', Eitr=' + totalEitr + ' [' + min + ((min == max) ? '' : ('-' + max)) + 'm] > ' + totalScore + ' score');
 			}
 		});
 		//
-		_this.table.on("dataFiltered", function (filters: any, rows: RowComponent[]) {
+		this.table.on("dataFiltered", (filters: Filter[], rows: RowComponent[]) => {
 			//filters - array of filters currently applied
 			//rows - array of row components that pass the filters
-			for (const resource of _this.resources) {
-				const styleTag: HTMLElement = <HTMLElement>document.getElementById("style-" + resource);
-				if (styleTag) {
-					(styleTag as any).disabled = true;
-				}
+			for (const resource of this.resources) {
+				(document.getElementById("style-" + resource) as any).disabled = true;
 			}
 			if (filters.length > 0) {
 				const keep: string[] = [];
-				for (const row of rows) {
+				for (const row /* RowComponent */ of rows) {
 					const dat: FoodRow = row.getData();
-					for (const resource of _this.resources) {
+					for (const resource /* string */ of this.resources) {
 						if ((dat as any)[resource]) {
 							keep.push(resource);
 						}
 					}
 				}
-				for (const resource of _this.resources) {
+				for (const resource /* string */ of this.resources) {
 					const styleTag: HTMLElement = <HTMLElement>document.getElementById("style-" + resource);
 					if (styleTag) {
 						const styleTagDisabled = keep.indexOf(resource) != -1;
@@ -518,28 +542,10 @@ export class Component {
 	}
 
 	buildDataReset(data: ValheimFood) {
-		document.getElementById("json-clear")?.addEventListener("click", function () {
-			window.localStorage.removeItem('valheim-food');
-			//location.reload();
+		document.getElementById("json-clear")?.addEventListener("click", (event: MouseEvent) => {
+			window.localStorage.removeItem(this.localStorageJsonName);
+			window.localStorage.removeItem(this.localStorageVersionName);
+			location.reload();
 		});
-	}
-
-	app($$data: ValheimFood): void {
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
-		console.log($$data);
-		window.localStorage.setItem('valheim-food-v1', JSON.stringify($$data));
-		this.buildResources($$data);
-		this.buildResourceCols($$data);
-		this.buildResourceChecks($$data);
-		//$(function () {
-			//setTimeout(() => {
-
-			//}, 3 * 1000);
-		//});
-		this.buildTableDate($$data);
-		this.buildTableFilters($$data);
-		this.buildTable($$data);
-		this.buildDataReset($$data);
-		this.buildResourceStyles($$data);
 	}
 }
