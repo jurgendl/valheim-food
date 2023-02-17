@@ -15,7 +15,8 @@ module.exports = {
     usedExports: true
   },
   output: {
-    filename: '[name].[contenthash].js',
+	filename: "valheim-bundle.js",
+    //filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
@@ -55,13 +56,15 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].[contenthash].css',
+      //filename: '[name].[contenthash].css',
+		filename: 'valheim-bundle.css',
       chunkFilename: '[id].css'
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './src/valheim-food.html',
-      filename: 'valheim-food.html'
+      //filename: 'valheim-food.html'
+      filename: 'index.html'
     }),
     new ForkTsCheckerWebpackPlugin(),
     new CopyPlugin({

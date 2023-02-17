@@ -9,7 +9,7 @@ module.exports = merge(common, {
 		open: {
 			target: ['valheim-food.html'],
 			app: {
-				name: 'google-chrome',
+				name: 'chrome',
 			},
 		}
 	}
