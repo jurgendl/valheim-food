@@ -10,7 +10,8 @@ module.exports = merge(common, {
 			target: ['valheim-food.html'],
 			app: {
 				name: 'chrome',
+				//arguments: ['--incognito', '--new-window'],
 			},
-		}
-	}
+		},
+	},
 });
