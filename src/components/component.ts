@@ -55,7 +55,7 @@ export interface FoodRow {
 
 // noinspection TypeScriptUnresolvedFunction
 export class Component {
-	version = '1.2';
+	version = '1.3';
 
 	localStorageJsonName = "valheim-food";
 
@@ -106,18 +106,12 @@ export class Component {
 	}
 
 	app($$data: ValheimFood): void {
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		console.log($$data);
 		window.localStorage.setItem(this.localStorageJsonName, JSON.stringify($$data));
 		window.localStorage.setItem(this.localStorageVersionName, this.version);
 		this.buildResources($$data);
 		this.buildResourceCols($$data);
 		this.buildResourceChecks($$data);
-		//$(function () {
-		//setTimeout(() => {
-
-		//}, 3 * 1000);
-		//});
 		this.buildTableDate($$data);
 		this.buildTableFilters($$data);
 		this.buildTable($$data);
@@ -140,18 +134,10 @@ export class Component {
 				for (const rt of resourceTier) {
 					if (resource == rt) {
 						colorClass = data.tiers[i];
+						break;
 					}
 				}
 			});
-			if (colorClass == '') {
-				data.resourceTiers.forEach((resourceTier, i) => {
-					for (const rt of resourceTier) {
-						if (resource == rt) {
-							colorClass = data.tiers[i];
-						}
-					}
-				});
-			}
 			this.resourceCols.push({
 				"title": resource,
 				"field": resource,
@@ -173,7 +159,8 @@ export class Component {
 			$('#check_' + fixedName).click(() => {
 				if (resource) {
 					const checked = $(this).is(':checked');
-					(document.getElementById("style-" + resource) as any).disabled = checked;
+					const style: HTMLStyleElement = <HTMLStyleElement>document.getElementById("style-" + resource);
+					style.disabled = checked;
 				}
 			});
 		}
@@ -181,11 +168,11 @@ export class Component {
 
 	buildResourceStyles(data: ValheimFood) {
 		for (const resource of this.resources) {
-			const style = document.createElement("style");
+			const style: HTMLStyleElement = document.createElement("style");
 			style.id = "style-" + resource;
 			style.innerHTML = "[tabulator-field='" + resource + "'] { display: none !important; }";
 			document.body.appendChild(style);
-			(document.getElementById("style-" + resource) as any).disabled = true;
+			style.disabled = true;
 		}
 	}
 
@@ -517,7 +504,8 @@ export class Component {
 			//filters - array of filters currently applied
 			//rows - array of row components that pass the filters
 			for (const resource of this.resources) {
-				(document.getElementById("style-" + resource) as any).disabled = true;
+				const style: HTMLStyleElement = <HTMLStyleElement>document.getElementById("style-" + resource);
+				style.disabled = true;
 			}
 			if (filters.length > 0) {
 				const keep: string[] = [];
@@ -530,12 +518,10 @@ export class Component {
 					}
 				}
 				for (const resource /* string */ of this.resources) {
-					const styleTag: HTMLElement = <HTMLElement>document.getElementById("style-" + resource);
-					if (styleTag) {
-						const styleTagDisabled = keep.indexOf(resource) != -1;
-						$('#check_' + resource.replace(' ', '_')).prop('checked', styleTagDisabled);
-						(styleTag as any).disabled = styleTagDisabled;
-					}
+					const styleTagDisabled = keep.indexOf(resource) != -1;
+					$('#check_' + resource.replace(' ', '_')).prop('checked', styleTagDisabled);
+					const styleTag: HTMLStyleElement = <HTMLStyleElement>document.getElementById("style-" + resource);
+					styleTag.disabled = styleTagDisabled;
 				}
 			}
 		});
