@@ -13,17 +13,20 @@ import com.opencsv.CSVReader;
 
 public class CsvToJson {
 	public static class VHData {
-		List<String> headers = Arrays.asList("name", "tier", "starred", "hp", "stamina", "eitr", "type", "hpPerSecond", "durationInMinutes");
+		List<String> headers = Arrays.asList("name", "tier", "starred", "hp", "stamina", "eitr", "type", "hpPerSecond",
+				"durationInMinutes");
 
 		List<String> tiers = Arrays.asList("meadows", "black forest", "swamp", "mountain", "plains", "mistlands");
 
 		List<List<String>> resourceTiers = Arrays.asList( //
-				Arrays.asList("raspberries", "mushroom", "honey", "neck tail", "boar meat", "deer meat", "greydwarf eye", "fish"), // 1 meadows
+				Arrays.asList("raspberries", "mushroom", "honey", "neck tail", "boar meat", "deer meat",
+						"greydwarf eye", "fish"), // 1 meadows
 				Arrays.asList("blueberries", "thistle", "carrot", "yellow mushroom"), // 2 black forest
 				Arrays.asList("turnip", "ooze", "entrails", "bloodbag", "serpent meat"), // 3 swamp
 				Arrays.asList("onion", "wolf meat", "freeze gland"), // 4 mountain
 				Arrays.asList("cloudberries", "lox meat", "barley"), // 5 plains
-				Arrays.asList("egg", "chicken meat", "hare meat", "magecap", "jotun puffs", "seeker meat", "blood clot", "sap", "royal jelly", "anglerfish")// 6 mistlands
+				Arrays.asList("egg", "chicken meat", "hare meat", "magecap", "jotun puffs", "seeker meat", "blood clot",
+						"sap", "royal jelly", "anglerfish")// 6 mistlands
 		);
 
 		Map<String, Food> food = new LinkedHashMap<>();
@@ -165,8 +168,11 @@ public class CsvToJson {
 
 	public static void main(String[] args) {
 		try {
+			System.out.println(System.getProperty("user.dir"));
+			String loc = System.getProperty("user.dir") + "/../";
 			VHData data = new VHData();
-			File f = new File("C:\\java\\valheim-food\\src" + "/valheim-food.csv");
+			File f = new File(loc + "/src/valheim-food.csv");
+			System.out.println(f.getCanonicalPath());
 			CSVReader reader = new CSVReader(new FileReader(f));
 			List<String> h = Arrays.asList(reader.readNext());
 			int i = 0;
@@ -217,11 +223,12 @@ public class CsvToJson {
 						}
 					}
 				}
-				System.out.println();
 			}
-			File fo = new File("C:\\java\\valheim-food\\src\\assets" + "/valheim-food.json");
+
+			File fo = new File(loc + "/src/assets/valheim-food.json");
+			System.out.println(fo.getCanonicalPath());
 			try (FileOutputStream fout = new FileOutputStream(fo)) {
-				new OM().writerFor(data.getClass()).writeValueAsString(data);
+				fout.write(new OM().writerFor(data.getClass()).writeValueAsString(data).getBytes());
 			}
 
 			StringBuilder style = new StringBuilder();
@@ -254,7 +261,8 @@ public class CsvToJson {
 					}
 				}
 			}
-			File fos = new File("C:\\java\\valheim-food\\src\\assets" + "/valheim-food.css");
+			File fos = new File(loc + "/src/assets/valheim-food.css");
+			System.out.println(fos.getCanonicalPath());
 			try (FileOutputStream fout = new FileOutputStream(fos)) {
 				fout.write(style.toString().getBytes());
 			}
