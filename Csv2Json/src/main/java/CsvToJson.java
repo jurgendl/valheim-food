@@ -13,9 +13,6 @@ import com.opencsv.CSVReader;
 
 public class CsvToJson {
 	public static class VHData {
-		List<String> headers = Arrays.asList("name", "tier", "starred", "hp", "stamina", "eitr", "type", "hpPerSecond",
-				"durationInMinutes");
-
 		List<String> tiers = Arrays.asList("meadows", "black forest", "swamp", "mountain", "plains", "mistlands");
 
 		List<List<String>> resourceTiers = Arrays.asList( //
@@ -30,14 +27,6 @@ public class CsvToJson {
 		);
 
 		Map<String, Food> food = new LinkedHashMap<>();
-
-		public List<String> getHeaders() {
-			return headers;
-		}
-
-		public void setHeaders(List<String> headers) {
-			this.headers = headers;
-		}
 
 		public List<String> getTiers() {
 			return tiers;

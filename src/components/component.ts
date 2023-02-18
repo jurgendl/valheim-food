@@ -34,7 +34,6 @@ export interface Food {
 }
 
 export interface ValheimFood {
-	headers: string[];
 	tiers: string[];
 	resourceTiers: string[][];
 	food: { [key: string]: Food };
@@ -62,12 +61,12 @@ export class Component {
 	localStorageVersionName = "valheim-food-version";
 
 	tierColors = new Map<number, string>([
-		[1, '#f7f781'],
-		[2, '#bbe33d'],
-		[3, '#b4c7dc'],
-		[4, '#dddddd'],
-		[5, '#ffdbb6'],
-		[6, '#ffc2c2'],
+		[1, '#f7f781'],//meadows
+		[2, '#bbe33d'],//dark forest
+		[3, '#b4c7dc'],//swamp
+		[4, '#dddddd'],//mountains
+		[5, '#ffdbb6'],//plains
+		[6, '#ffc2c2'],//mistlands
 	]);
 
 	resources: string[] = [];
@@ -85,8 +84,8 @@ export class Component {
 			const localStorageJsonNameValue = window.localStorage.getItem(this.localStorageJsonName);
 			const localStorageVersionNameValue = window.localStorage.getItem(this.localStorageVersionName);
 			if (localStorageJsonNameValue && localStorageVersionNameValue == this.version) {
-				const __data = JSON.parse(localStorageJsonNameValue);
-				const test = __data.headers;
+				const __data: ValheimFood = JSON.parse(localStorageJsonNameValue);
+				const test = __data.resourceTiers;
 				this.app(__data);
 			} else {
 				this.fetchDataAgain();
@@ -206,7 +205,6 @@ export class Component {
 				durationInMinutes: food.durationInMinutes
 			};
 			for (const resource /* string*/ of this.resources) {
-				//const fr: any = food.resources/* { [key: string]: number } */[resource];
 				const count = food.resources[resource];
 				(row as any)[resource] = count ? String(count) : '';
 			}
@@ -326,7 +324,7 @@ export class Component {
 			field: "name",
 			frozen: true,
 			/*headerFilter: "input",*/
-			formatter: (cell: CellComponent, formatterParams: any) => {
+			formatter: (cell: CellComponent, formatterParams: object) => {
 				const dat: FoodRow = cell.getData() as FoodRow;
 				const value: number = cell.getValue();
 				const color: string | undefined = this.tierColors.get(dat.tier);
@@ -357,7 +355,7 @@ export class Component {
 			hozAlign: "center",
 			/* headerFilter: "list",*/
 			/* headerFilterParams: { valuesLookup: true, clearable: true }, */
-			formatter: (cell: CellComponent, formatterParams: any) => {
+			formatter: (cell: CellComponent, formatterParams: object) => {
 				const dat: FoodRow = cell.getData() as FoodRow;
 				const value: number = cell.getValue();
 				return "<span style='background-color:" + this.tierColors.get(dat.tier) + ";display:block;width:100%;height:100%' title='meadows'>" + value + "</span>";
@@ -404,7 +402,7 @@ export class Component {
 			hozAlign: "center",
 			/* headerFilter: "list",*/
 			/* headerFilterParams: { valuesLookup: true, clearable: true },*/
-			formatter: (cell: CellComponent, formatterParams: any) => {
+			formatter: (cell: CellComponent, formatterParams: object) => {
 				const value: string = cell.getValue();
 				if (value == "Y") {
 					return "<span title='yellow' style='background-color:#ffff84;display:block;width:100%;height:100%'>Y</span>";
@@ -441,7 +439,7 @@ export class Component {
 			field: "score",
 			sorter: "number",
 			headerVertical: true,
-			mutator: (value: number, dat: Food, type: 'data' | 'edit', params: any, component: CellComponent | undefined) => {
+			mutator: (value: number, dat: Food, type: 'data' | 'edit', params: object, component: CellComponent | undefined) => {
 				const score = (dat.hp + dat.stamina + dat.eitr) * dat.durationInMinutes;
 				return score;
 			}
@@ -468,11 +466,9 @@ export class Component {
 		};
 		this.table = new Tabulator("#valheim-food-table", options);
 		//
-		//const callBack: (data: any[], rows: RowComponent[]) => void = (data, rows) => {/**/};
-		//this.table.on("rowSelectionChanged", callBack);
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
-		this.table.on("rowSelectionChanged", (data: any[], rows: RowComponent[]) => {
+		this.table.on("rowSelectionChanged", (data: object[], rows: RowComponent[]) => {
 			if (rows.length == 0) {
 				$('#totalPoints').val('');
 			} else if (rows.length > 3) {

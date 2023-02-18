@@ -1,5 +1,4 @@
 {
-  "headers" : [ "name", "tier", "starred", "hp", "stamina", "eitr", "type", "hpPerSecond", "durationInMinutes" ],
   "tiers" : [ "meadows", "black forest", "swamp", "mountain", "plains", "mistlands" ],
   "resourceTiers" : [ [ "raspberries", "mushroom", "honey", "neck tail", "boar meat", "deer meat", "greydwarf eye", "fish" ], [ "blueberries", "thistle", "carrot", "yellow mushroom" ], [ "turnip", "ooze", "entrails", "bloodbag", "serpent meat" ], [ "onion", "wolf meat", "freeze gland" ], [ "cloudberries", "lox meat", "barley" ], [ "egg", "chicken meat", "hare meat", "magecap", "jotun puffs", "seeker meat", "blood clot", "sap", "royal jelly", "anglerfish" ] ],
   "food" : {
