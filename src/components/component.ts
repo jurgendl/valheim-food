@@ -20,7 +20,6 @@ export enum FoodType {
 }
 
 export interface Food {
-	"id": number;
 	"name": string;
 	"tier": 1 | 2 | 3 | 4 | 5 | 6;
 	"starred": boolean;
@@ -176,6 +175,7 @@ export class Component {
 	}
 
 	buildTableDate(data: ValheimFood) {
+		let foodId = 0;
 		for (const [name, food] of Object.entries(data.food)) {
 			let ft: 'R' | 'Y' | 'W' | 'B';
 			switch (food.type) {
@@ -193,7 +193,7 @@ export class Component {
 					break;
 			}
 			const row: FoodRow = {
-				id: food.id,
+				id: foodId,
 				name: food.name,
 				tier: food.tier,
 				starred: food.starred,// ? '★' : '',
@@ -204,6 +204,7 @@ export class Component {
 				hpPerSecond: food.hpPerSecond,
 				durationInMinutes: food.durationInMinutes
 			};
+			foodId++;
 			for (const resource /* string*/ of this.resources) {
 				const count = food.resources[resource];
 				(row as any)[resource] = count ? String(count) : '';
@@ -323,7 +324,6 @@ export class Component {
 			title: "Name",
 			field: "name",
 			frozen: true,
-			/*headerFilter: "input",*/
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const dat: FoodRow = cell.getData() as FoodRow;
 				const value: number = cell.getValue();
@@ -353,8 +353,6 @@ export class Component {
 			sorter: "number",
 			headerVertical: true,
 			hozAlign: "center",
-			/* headerFilter: "list",*/
-			/* headerFilterParams: { valuesLookup: true, clearable: true }, */
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const dat: FoodRow = cell.getData() as FoodRow;
 				const value: number = cell.getValue();
@@ -368,8 +366,6 @@ export class Component {
 			headerVertical: true,
 			hozAlign: "center",
 			formatter: "tickCross"
-			/* headerFilter: "tickCross",*/
-			/* headerFilterParams: { "tristate": true }*/
 		});
 		infoGroupColumDef.columns?.push({
 			title: "HP",
@@ -377,7 +373,6 @@ export class Component {
 			sorter: "number",
 			headerVertical: true,
 			hozAlign: "center"
-			/* headerFilter: "number" */
 		});
 		infoGroupColumDef.columns?.push({
 			title: "Stamina",
@@ -385,7 +380,6 @@ export class Component {
 			sorter: "number",
 			headerVertical: true,
 			hozAlign: "center"
-			/* headerFilter: "number"*/
 		});
 		infoGroupColumDef.columns?.push({
 			title: "Eitr",
@@ -393,15 +387,12 @@ export class Component {
 			sorter: "number",
 			headerVertical: true,
 			hozAlign: "center"
-			/* headerFilter: "number"*/
 		});
 		infoGroupColumDef.columns?.push({
 			title: "Type",
 			field: "type",
 			headerVertical: true,
 			hozAlign: "center",
-			/* headerFilter: "list",*/
-			/* headerFilterParams: { valuesLookup: true, clearable: true },*/
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const value: string = cell.getValue();
 				if (value == "Y") {
@@ -423,8 +414,6 @@ export class Component {
 			sorter: "number",
 			headerVertical: true,
 			hozAlign: "center"
-			/* headerFilter: "list",*/
-			/* headerFilterParams: { valuesLookup: true, clearable: true }*/
 		});
 		infoGroupColumDef.columns?.push({
 			title: "Duration (m)",
@@ -432,7 +421,6 @@ export class Component {
 			sorter: "number",
 			headerVertical: true,
 			hozAlign: "center"
-			/* headerFilter: "number" */
 		});
 		infoGroupColumDef.columns?.push({
 			title: "Score",

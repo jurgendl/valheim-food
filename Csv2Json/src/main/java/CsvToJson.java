@@ -54,7 +54,6 @@ public class CsvToJson {
 	}
 
 	public static class Food {
-		Integer id;
 		String name;
 		Integer tier;
 		Boolean starred;
@@ -145,14 +144,6 @@ public class CsvToJson {
 		public void setResources(Map<String, Number> resources) {
 			this.resources = resources;
 		}
-
-		public Integer getId() {
-			return id;
-		}
-
-		public void setId(Integer id) {
-			this.id = id;
-		}
 	}
 
 	public static void main(String[] args) {
@@ -165,11 +156,9 @@ public class CsvToJson {
 			CSVReader reader = new CSVReader(new FileReader(f));
 			List<String> h = Arrays.asList(reader.readNext());
 			int i = 0;
-			int id = 0;
 			for (String[] r : reader.readAll()) {
 				i = 0;
 				Food food = new Food();
-				food.id = id++;
 				food.name = opt(r[i++]).trim();
 				data.food.put(food.name, food);
 				food.tier = Integer.parseInt(opt(r[i++]));
