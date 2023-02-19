@@ -1,3 +1,8 @@
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.opencsv.CSVReader;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -5,25 +10,19 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.opencsv.CSVReader;
+import java.util.stream.Collectors;
 
 public class CsvToJson {
 	public static class VHData {
 		List<String> tiers = Arrays.asList("meadows", "black forest", "swamp", "mountain", "plains", "mistlands");
 
 		List<List<String>> resourceTiers = Arrays.asList( //
-				Arrays.asList("raspberries", "mushroom", "honey", "neck tail", "boar meat", "deer meat",
-						"greydwarf eye", "fish"), // 1 meadows
-				Arrays.asList("blueberries", "thistle", "carrot", "yellow mushroom"), // 2 black forest
-				Arrays.asList("turnip", "ooze", "entrails", "bloodbag", "serpent meat"), // 3 swamp
-				Arrays.asList("onion", "wolf meat", "freeze gland"), // 4 mountain
-				Arrays.asList("cloudberries", "lox meat", "barley"), // 5 plains
-				Arrays.asList("egg", "chicken meat", "hare meat", "magecap", "jotun puffs", "seeker meat", "blood clot",
-						"sap", "royal jelly", "anglerfish")// 6 mistlands
+			Arrays.stream("raspberries\thoney\tneck tail\tboar meat\tdeer meat\tfish\tgreydwarf eye\tmushroom\tdandelion\tcoal".split("\t")).map(String::trim).collect(Collectors.toList()), // 1 meadows
+			Arrays.stream("blueberries\tcarrot\tyellow mushroom\tthistle".split("\t")).map(String::trim).collect(Collectors.toList()), // 2 black forest
+			Arrays.stream("turnip\tooze\tentrails\tbloodbag\tserpent meat".split("\t")).map(String::trim).collect(Collectors.toList()), // 3 swamp
+			Arrays.stream("onion\twolf meat\tfreeze gland".split("\t")).map(String::trim).collect(Collectors.toList()), // 4 mountain
+			Arrays.stream("cloudberries \tlox meat\tbarley".split("\t")).map(String::trim).collect(Collectors.toList()), // 5 plains
+			Arrays.stream("egg\tchicken meat\tmagecap \tjotun puffs \tseeker meat \thare meat\tblood clot\tsap\troyal jelly\tanglerfish".split("\t")).map(String::trim).collect(Collectors.toList())// 6 mistlands
 		);
 
 		Map<String, Food> food = new LinkedHashMap<>();
@@ -163,9 +162,15 @@ public class CsvToJson {
 				data.food.put(food.name, food);
 				food.tier = Integer.parseInt(opt(r[i++]));
 				food.starred = "*".equals(opt(r[i++]));
-				food.hp = Integer.parseInt(opt(r[i++]));
+				String hp = opt(r[i++]);
+				if (hp != null && !hp.trim().isEmpty()) {
+					food.hp = Integer.parseInt(hp);
+				}
 				opt(r[i++]);
-				food.stamina = Integer.parseInt(opt(r[i++]));
+				String stamina = opt(r[i++]);
+				if (stamina != null && !stamina.trim().isEmpty()) {
+					food.stamina = Integer.parseInt(stamina);
+				}
 				opt(r[i++]);
 				String type = opt(r[i++]);
 				if (type.contains(":")) {
@@ -178,18 +183,28 @@ public class CsvToJson {
 						food.type = "white";
 					} else if ("r".equals(type)) {
 						food.type = "red";
+					} else if ("m".equals(type)) {
+						food.type = "mead";
 					} else {
 						throw new IllegalArgumentException();
 					}
 					food.eitr = 0;
 				}
-				food.hpPerSecond = Integer.parseInt(opt(r[i++]));
-				food.durationInMinutes = Integer.parseInt(opt(r[i++]));
+				String hpPerSecond = opt(r[i++]);
+				if (hpPerSecond != null && !hpPerSecond.trim().isEmpty()) {
+					food.hpPerSecond = Integer.parseInt(hpPerSecond);
+				}
+				String durationInMinutes = opt(r[i++]);
+				if (durationInMinutes != null && !durationInMinutes.trim().isEmpty()) {
+					food.durationInMinutes = Integer.parseInt(durationInMinutes);
+				}
 				for (; i < r.length; i++) {
 					String nr = opt(r[i]);
 					if (nr != null) {
 						String resource = h.get(i).trim();
-						if (nr.contains(",")) {
+						if (nr == null || nr.trim().isEmpty()) {
+							//
+						} else if (nr.contains(",")) {
 							double c = Double.parseDouble(nr.replace(",", "."));
 							food.resources.put(resource, c);
 						} else if (nr.contains(".")) {
@@ -221,17 +236,17 @@ public class CsvToJson {
 			}
 			{
 				String c = "noop {\n"//
-						+ "      content: '';\n"//
-						+ "      width: 32px;\n"//
-						+ "      height: 32px;\n"//
-						+ "      background-size: 32px;\n"//
-						+ "    }";
+					+ "      content: '';\n"//
+					+ "      width: 32px;\n"//
+					+ "      height: 32px;\n"//
+					+ "      background-size: 32px;\n"//
+					+ "    }";
 				style.append("\n").append(c);
 			}
 			{
 				String c = "    .tabulator-col[tabulator-field=\"RRR\"] .tabulator-col-title::before {\n"//
-						+ "      background-image: url('images/RRR.png');\n"//
-						+ "    }";
+					+ "      background-image: url('images/RRR.png');\n"//
+					+ "    }";
 				for (List<String> resources : data.resourceTiers) {
 					for (String rrr : resources) {
 						String string = c.replace("RRR", rrr);
@@ -260,10 +275,10 @@ public class CsvToJson {
 			configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			configure(com.fasterxml.jackson.core.JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 			setVisibility(getSerializationConfig().getDefaultVisibilityChecker()//
-					.withFieldVisibility(JsonAutoDetect.Visibility.ANY)//
-					.withGetterVisibility(JsonAutoDetect.Visibility.NONE)//
-					.withSetterVisibility(JsonAutoDetect.Visibility.NONE)//
-					.withCreatorVisibility(JsonAutoDetect.Visibility.NONE));//
+				.withFieldVisibility(JsonAutoDetect.Visibility.ANY)//
+				.withGetterVisibility(JsonAutoDetect.Visibility.NONE)//
+				.withSetterVisibility(JsonAutoDetect.Visibility.NONE)//
+				.withCreatorVisibility(JsonAutoDetect.Visibility.NONE));//
 			configure(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT, true);
 		}
 	}

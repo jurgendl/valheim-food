@@ -53,11 +53,13 @@ export interface FoodRow {
 
 // noinspection TypeScriptUnresolvedFunction
 export class Component {
-	version = '1.3';
+	version = '1.4';
 
 	localStorageJsonName = "valheim-food";
 
 	localStorageVersionName = "valheim-food-version";
+
+	jsonUrl = 'assets/valheim-food.json?v=' + this.version;
 
 	tierColors = new Map<number, string>([
 		[1, '#f7f781'],//meadows
@@ -96,7 +98,7 @@ export class Component {
 	}
 
 	fetchDataAgain(): void {
-		fetch('assets/valheim-food.json')
+		fetch(this.jsonUrl)
 			.then((response: Response) => response.json() as Promise<ValheimFood>)
 			.then(d => {
 				this.app(d);
