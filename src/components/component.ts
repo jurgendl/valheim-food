@@ -16,7 +16,8 @@ export enum FoodType {
 	yellow = "yellow",
 	red = "red",
 	white = "white",
-	blue = "blue"
+	blue = "blue",
+	mead = "mead"
 }
 
 export interface Food {
@@ -46,14 +47,14 @@ export interface FoodRow {
 	hp: number;
 	stamina: number;
 	eitr: number;
-	type: 'R' | 'Y' | 'W' | 'B';
+	type: 'R' | 'Y' | 'W' | 'B' | 'M';
 	hpPerSecond: number;
 	durationInMinutes: number;
 }
 
 // noinspection TypeScriptUnresolvedFunction
 export class Component {
-	version = '1.4';
+	version = '1.5';
 
 	localStorageJsonName = "valheim-food";
 
@@ -179,8 +180,11 @@ export class Component {
 	buildTableDate(data: ValheimFood) {
 		let foodId = 0;
 		for (const [name, food] of Object.entries(data.food)) {
-			let ft: 'R' | 'Y' | 'W' | 'B';
+			let ft: 'R' | 'Y' | 'W' | 'B' | 'M';
 			switch (food.type) {
+				case FoodType.mead:
+					ft = 'M';
+					break;
 				case FoodType.blue:
 					ft = 'B';
 					break;
@@ -199,12 +203,12 @@ export class Component {
 				name: food.name,
 				tier: food.tier,
 				starred: food.starred,// ? '★' : '',
-				hp: food.hp,
-				stamina: food.stamina,
-				eitr: food.eitr,
+				hp: food.hp ? food.hp : 0,
+				stamina: food.stamina ? food.stamina : 0,
+				eitr: food.eitr ? food.eitr : 0,
 				type: ft,
-				hpPerSecond: food.hpPerSecond,
-				durationInMinutes: food.durationInMinutes
+				hpPerSecond: food.hpPerSecond ? food.hpPerSecond : 0,
+				durationInMinutes: food.durationInMinutes ? food.durationInMinutes : 0
 			};
 			foodId++;
 			for (const resource /* string*/ of this.resources) {
@@ -312,7 +316,7 @@ export class Component {
 			hpFilter.val('');
 			staminaFilter.val('');
 			eitrFilter.val('');
-			(typeFilter as any).selectpicker('val', ['W', 'Y', 'R', 'B']);
+			(typeFilter as any).selectpicker('val', ['W', 'Y', 'R', 'B', 'M']);
 			(hpsFilter as any).selectpicker('val', '');
 			(durationFilter as any).selectpicker('val', '');
 			//
@@ -358,7 +362,7 @@ export class Component {
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const dat: FoodRow = cell.getData() as FoodRow;
 				const value: number = cell.getValue();
-				return "<span style='background-color:" + this.tierColors.get(dat.tier) + ";display:block;width:100%;height:100%' title='meadows'>" + value + "</span>";
+				return "<span style='background-color:" + this.tierColors.get(dat.tier) + ";display:block;width:100%;height:100%' title='" + value + "'>" + value + "</span>";
 			}
 		});
 		infoGroupColumDef.columns?.push({
@@ -404,7 +408,9 @@ export class Component {
 				} else if (value == "B") {
 					return "<span title='blue' style='background-color:#b4c7dc;display:block;width:100%;height:100%'>B</span>";
 				} else if (value == "W") {
-					return "<span title='white' style='background-color:#ddd;display:block;width:100%;height:100%'>W</span>";
+					return "<span title='white' style='background-color:#dddddd;display:block;width:100%;height:100%'>W</span>";
+				} else if (value == "M") {
+					return "<span title='mead' style='background-color:#ffdbb6;display:block;width:100%;height:100%'>M</span>";
 				} else {
 					return value;
 				}

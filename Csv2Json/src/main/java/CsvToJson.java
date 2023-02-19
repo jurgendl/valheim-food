@@ -61,7 +61,7 @@ public class CsvToJson {
 		Integer eitr;
 		String type;
 		Integer hpPerSecond;
-		Integer durationInMinutes;
+		Number durationInMinutes;
 		Map<String, Number> resources = new LinkedHashMap<>();
 
 		public Integer getEitr() {
@@ -128,11 +128,11 @@ public class CsvToJson {
 			this.hpPerSecond = hpPerSecond;
 		}
 
-		public Integer getDurationInMinutes() {
+		public Number getDurationInMinutes() {
 			return durationInMinutes;
 		}
 
-		public void setDurationInMinutes(Integer durationInMinutes) {
+		public void setDurationInMinutes(Number durationInMinutes) {
 			this.durationInMinutes = durationInMinutes;
 		}
 
@@ -196,7 +196,13 @@ public class CsvToJson {
 				}
 				String durationInMinutes = opt(r[i++]);
 				if (durationInMinutes != null && !durationInMinutes.trim().isEmpty()) {
-					food.durationInMinutes = Integer.parseInt(durationInMinutes);
+					if(durationInMinutes.contains(",")) {
+						food.durationInMinutes = Double.parseDouble(durationInMinutes.replace(",", "."));
+					} else if(durationInMinutes.contains(".")) {
+						food.durationInMinutes = Double.parseDouble(durationInMinutes);
+					} else {
+						food.durationInMinutes = Integer.parseInt(durationInMinutes);
+					}
 				}
 				for (; i < r.length; i++) {
 					String nr = opt(r[i]);

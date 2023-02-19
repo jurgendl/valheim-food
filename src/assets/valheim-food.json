@@ -211,6 +211,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 0.16,
       "resources" : {
         "raspberries" : 10,
         "honey" : 10,
@@ -224,6 +225,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 0.03,
       "resources" : {
         "raspberries" : 10,
         "honey" : 10,
@@ -236,6 +238,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 10,
       "resources" : {
         "honey" : 10,
         "neck tail" : 1,
@@ -249,6 +252,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 0.16,
       "resources" : {
         "raspberries" : 10,
         "honey" : 10,
@@ -368,6 +372,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 10,
       "resources" : {
         "honey" : 10,
         "greydwarf eye" : 1,
@@ -381,6 +386,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 0.16,
       "resources" : {
         "raspberries" : 10,
         "honey" : 10,
@@ -571,6 +577,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 10,
       "resources" : {
         "cloudberries" : 10,
         "barley" : 10
@@ -582,6 +589,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 0.03,
       "resources" : {
         "raspberries" : 10,
         "yellow mushroom" : 10,
@@ -834,6 +842,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 5,
       "resources" : {
         "cloudberries" : 10,
         "jotun puffs" : 10,
@@ -846,6 +855,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 0.16,
       "resources" : {
         "honey" : 10,
         "blood clot" : 4,
@@ -858,6 +868,7 @@
       "starred" : false,
       "eitr" : 0,
       "type" : "mead",
+      "durationInMinutes" : 0.16,
       "resources" : {
         "honey" : 10,
         "magecap" : 5,
