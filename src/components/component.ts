@@ -304,12 +304,12 @@ export class Component {
 		}
 
 		//
-		document.getElementById("filter")?.addEventListener("click", (event: MouseEvent) => {
+		(<HTMLButtonElement>document.getElementById("filter")).addEventListener("click", (event: MouseEvent) => {
 			updateFilter();
 		});
 
 		//
-		document.getElementById("filter-clear")?.addEventListener("click", (event: MouseEvent) => {
+		(<HTMLButtonElement>document.getElementById("filter-clear")).addEventListener("click", (event: MouseEvent) => {
 			nameFilter.val('');
 			(tierFilter as any).selectpicker('val', ['1', '2', '3', '4', '5', '6']);
 			(starredFilter as any).selectpicker('val', ['y', 'n']);
@@ -334,18 +334,18 @@ export class Component {
 				const foodRow: FoodRow = cell.getData() as FoodRow;
 				const cellValue: number = cell.getValue();
 				const color: string | undefined = this.tierColors.get(foodRow.tier);
-				let tt = "";
+				let tooltip = cellValue + ":";
 				const food: Food | undefined = valheimFood.food[cellValue];
 				if (food) {
 					for (const [n, c] of Object.entries(food.resources)) {
-						if (tt == "") {
-							tt = tt + c + " " + n;
+						if (tooltip == "") {
+							tooltip = tooltip + c + " " + n;
 						} else {
-							tt = tt + "\n" + c + " " + n;
+							tooltip = tooltip + "\n" + c + " " + n;
 						}
 					}
 				}
-				return '<div style="background-color:' + color + '" title="' + tt + '"><img width=32 height=32 src="assets/images/' + cellValue + '.png">&nbsp;' + cellValue + '</div>';
+				return '<div style="background-color:' + color + '" title="' + tooltip + '"><img width=32 height=32 src="assets/images/' + cellValue + '.png">&nbsp;' + cellValue + '</div>';
 			}
 		});
 		const infoGroupColumDef: ColumnDefinition = {//create column group
@@ -499,8 +499,7 @@ export class Component {
 			//filters - array of filters currently applied
 			//rows - array of row components that pass the filters
 			for (const resource of this.resources) {
-				const style: HTMLStyleElement = <HTMLStyleElement>document.getElementById("style-" + resource);
-				style.disabled = true;
+				(<HTMLStyleElement>document.getElementById("style-" + resource)).disabled = true;
 			}
 			if (filters.length > 0) {
 				const keep: string[] = [];
@@ -513,17 +512,16 @@ export class Component {
 					}
 				}
 				for (const resource /* string */ of this.resources) {
-					const styleTagDisabled = keep.indexOf(resource) != -1;
+					const styleTagDisabled: boolean = keep.indexOf(resource) != -1;
 					$('#check_' + resource.replace(' ', '_')).prop('checked', styleTagDisabled);
-					const styleTag: HTMLStyleElement = <HTMLStyleElement>document.getElementById("style-" + resource);
-					styleTag.disabled = styleTagDisabled;
+					(<HTMLStyleElement>document.getElementById("style-" + resource)).disabled = styleTagDisabled;
 				}
 			}
 		});
 	}
 
 	buildDataReset(valheimFood: ValheimFood) {
-		document.getElementById("json-clear")?.addEventListener("click", (event: MouseEvent) => {
+		(<HTMLButtonElement>document.getElementById("json-clear")).addEventListener("click", (event: MouseEvent) => {
 			window.localStorage.removeItem(this.localStorageJsonName);
 			window.localStorage.removeItem(this.localStorageVersionName);
 			location.reload();
