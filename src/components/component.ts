@@ -1,4 +1,4 @@
-//  npm install --save-dev @types/jquery
+// npm install --save-dev @types/jquery
 // npm install tabulator-tables --save
 // npm i --save-dev @types/tabulator-tables
 
@@ -12,6 +12,9 @@ import {
 } from 'tabulator-tables';
 
 
+type Tier = 1 | 2 | 3 | 4 | 5 | 6;
+type FoodTypeType = 'R' | 'Y' | 'W' | 'B' | 'M';
+
 export enum FoodType {
 	yellow = "yellow",
 	red = "red",
@@ -22,7 +25,7 @@ export enum FoodType {
 
 export interface Food {
 	"name": string;
-	"tier": 1 | 2 | 3 | 4 | 5 | 6;
+	"tier": Tier;
 	"starred": boolean;
 	"hp": number;
 	"stamina": number;
@@ -42,12 +45,12 @@ export interface ValheimFood {
 export interface FoodRow {
 	id: number;
 	name: string;
-	tier: 1 | 2 | 3 | 4 | 5 | 6;
+	tier: Tier;
 	starred: boolean;
 	hp: number;
 	stamina: number;
 	eitr: number;
-	type: 'R' | 'Y' | 'W' | 'B' | 'M';
+	type: FoodTypeType;
 	hpPerSecond: number;
 	durationInMinutes: number;
 }
@@ -101,43 +104,40 @@ export class Component {
 	fetchDataAgain(): void {
 		fetch(this.jsonUrl)
 			.then((response: Response) => response.json() as Promise<ValheimFood>)
-			.then(d => {
-				this.app(d);
-			});
+			.then((valheimFood: ValheimFood) => this.app(valheimFood));
 	}
 
-	app($$data: ValheimFood): void {
-		console.log($$data);
-		window.localStorage.setItem(this.localStorageJsonName, JSON.stringify($$data));
+	app(valheimFood: ValheimFood): void {
+		console.log(valheimFood);
+		window.localStorage.setItem(this.localStorageJsonName, JSON.stringify(valheimFood));
 		window.localStorage.setItem(this.localStorageVersionName, this.version);
-		this.buildResources($$data);
-		this.buildResourceCols($$data);
-		this.buildResourceChecks($$data);
-		this.buildTableDate($$data);
-		this.buildTableFilters($$data);
-		this.buildTable($$data);
-		this.buildDataReset($$data);
-		this.buildResourceStyles($$data);
+		this.buildResources(valheimFood);
+		this.buildResourceCols(valheimFood);
+		this.buildResourceChecks(valheimFood);
+		this.buildTableDate(valheimFood);
+		this.buildTableFilters(valheimFood);
+		this.buildTable(valheimFood);
+		this.buildDataReset(valheimFood);
+		this.buildResourceStyles(valheimFood);
 	}
 
-	buildResources(data: ValheimFood) {
-		for (const resourceTier of data.resourceTiers) {
-			for (const _resource of resourceTier) {
-				this.resources.push(_resource);
-			}
-		}
+	buildResources(valheimFood: ValheimFood) {
+		valheimFood.resourceTiers.forEach((resourceTier: string[], i: number) => {
+			resourceTier.forEach((resourceTierResource: string, ii: number) => {
+				this.resources.push(resourceTierResource);
+			});
+		});
 	}
 
-	buildResourceCols(data: ValheimFood) {
+	buildResourceCols(valheimFood: ValheimFood) {
 		for (const resource of this.resources) {
 			let colorClass = '';
-			data.resourceTiers.forEach((resourceTier, i) => {
-				for (const rt of resourceTier) {
-					if (resource == rt) {
-						colorClass = data.tiers[i];
-						break;
+			valheimFood.resourceTiers.forEach((resourceTier: string[], i: number) => {
+				resourceTier.forEach((resourceTierResource: string, ii: number) => {
+					if (resource == resourceTierResource) {
+						colorClass = valheimFood.tiers[i];
 					}
-				}
+				});
 			});
 			this.resourceCols.push({
 				"title": resource,
@@ -150,7 +150,7 @@ export class Component {
 		}
 	}
 
-	buildResourceChecks(data: ValheimFood) {
+	buildResourceChecks(valheimFood: ValheimFood) {
 		for (const resource of this.resources) {
 			const fixedName = resource.replace(' ', '_');
 			const template = '<div class="col-2"><div style="width:unset;display:inline;" class="imgcheck input-group input-group-sm"><label class="checkbox-inline" for="check_' + fixedName + '"><input checked="checked" value="' + resource + '" style="display: none;" type="checkbox" id="check_' + fixedName + '"><img id="is_' + fixedName + '" width="32" height="32" src="assets/images/' + resource + '.png">&nbsp;<span style="font-size:11px" id="lbl_' + fixedName + '">' + resource + '</span></label></div></div>'
@@ -167,7 +167,7 @@ export class Component {
 		}
 	}
 
-	buildResourceStyles(data: ValheimFood) {
+	buildResourceStyles(valheimFood: ValheimFood) {
 		for (const resource of this.resources) {
 			const style: HTMLStyleElement = document.createElement("style");
 			style.id = "style-" + resource;
@@ -177,10 +177,10 @@ export class Component {
 		}
 	}
 
-	buildTableDate(data: ValheimFood) {
+	buildTableDate(valheimFood: ValheimFood) {
 		let foodId = 0;
-		for (const [name, food] of Object.entries(data.food)) {
-			let ft: 'R' | 'Y' | 'W' | 'B' | 'M';
+		for (const [name, food] of Object.entries(valheimFood.food)) {
+			let ft: FoodTypeType;
 			switch (food.type) {
 				case FoodType.mead:
 					ft = 'M';
@@ -219,7 +219,7 @@ export class Component {
 		}
 	}
 
-	buildTableFilters(data: ValheimFood) {
+	buildTableFilters(valheimFood: ValheimFood) {
 		const nameFilter: JQuery<HTMLElement> = $('#filter-name');
 		const tierFilter: JQuery<HTMLElement> = $('#filter-tier');
 		const starredFilter: JQuery<HTMLElement> = $('#filter-starred');
@@ -235,7 +235,7 @@ export class Component {
 			//
 			this.table.clearFilter(true);
 			//
-			for (let i = 0; i < Object.keys(data.food).length; i++) {
+			for (let i = 0; i < Object.keys(valheimFood.food).length; i++) {
 				this.table.deselectRow(i);
 			}
 			//
@@ -324,18 +324,18 @@ export class Component {
 		});
 	}
 
-	buildTable(data: ValheimFood) {
+	buildTable(valheimFood: ValheimFood) {
 		const columDefs: ColumnDefinition[] = [];
 		columDefs.push({
 			title: "Name",
 			field: "name",
 			frozen: true,
 			formatter: (cell: CellComponent, formatterParams: object) => {
-				const dat: FoodRow = cell.getData() as FoodRow;
-				const value: number = cell.getValue();
-				const color: string | undefined = this.tierColors.get(dat.tier);
+				const foodRow: FoodRow = cell.getData() as FoodRow;
+				const cellValue: number = cell.getValue();
+				const color: string | undefined = this.tierColors.get(foodRow.tier);
 				let tt = "";
-				const food: Food | undefined = data.food[value];
+				const food: Food | undefined = valheimFood.food[cellValue];
 				if (food) {
 					for (const [n, c] of Object.entries(food.resources)) {
 						if (tt == "") {
@@ -345,7 +345,7 @@ export class Component {
 						}
 					}
 				}
-				return '<div style="background-color:' + color + '" title="' + tt + '"><img width=32 height=32 src="assets/images/' + value + '.png">&nbsp;' + value + '</div>';
+				return '<div style="background-color:' + color + '" title="' + tt + '"><img width=32 height=32 src="assets/images/' + cellValue + '.png">&nbsp;' + cellValue + '</div>';
 			}
 		});
 		const infoGroupColumDef: ColumnDefinition = {//create column group
@@ -360,9 +360,9 @@ export class Component {
 			headerVertical: true,
 			hozAlign: "center",
 			formatter: (cell: CellComponent, formatterParams: object) => {
-				const dat: FoodRow = cell.getData() as FoodRow;
-				const value: number = cell.getValue();
-				return "<span style='background-color:" + this.tierColors.get(dat.tier) + ";display:block;width:100%;height:100%' title='" + value + "'>" + value + "</span>";
+				const foodRow: FoodRow = cell.getData() as FoodRow;
+				const cellValue: number = cell.getValue();
+				return "<span style='background-color:" + this.tierColors.get(foodRow.tier) + ";display:block;width:100%;height:100%' title='" + cellValue + "'>" + cellValue + "</span>";
 			}
 		});
 		infoGroupColumDef.columns?.push({
@@ -400,19 +400,19 @@ export class Component {
 			headerVertical: true,
 			hozAlign: "center",
 			formatter: (cell: CellComponent, formatterParams: object) => {
-				const value: string = cell.getValue();
-				if (value == "Y") {
+				const cellValue: string = cell.getValue();
+				if (cellValue == "Y") {
 					return "<span title='yellow' style='background-color:#ffff84;display:block;width:100%;height:100%'>Y</span>";
-				} else if (value == "R") {
+				} else if (cellValue == "R") {
 					return "<span title='red' style='background-color:#ffc2c2;display:block;width:100%;height:100%'>R</span>";
-				} else if (value == "B") {
+				} else if (cellValue == "B") {
 					return "<span title='blue' style='background-color:#b4c7dc;display:block;width:100%;height:100%'>B</span>";
-				} else if (value == "W") {
+				} else if (cellValue == "W") {
 					return "<span title='white' style='background-color:#dddddd;display:block;width:100%;height:100%'>W</span>";
-				} else if (value == "M") {
+				} else if (cellValue == "M") {
 					return "<span title='mead' style='background-color:#ffdbb6;display:block;width:100%;height:100%'>M</span>";
 				} else {
-					return value;
+					return cellValue;
 				}
 			}
 		});
@@ -435,9 +435,9 @@ export class Component {
 			field: "score",
 			sorter: "number",
 			headerVertical: true,
-			mutator: (value: number, dat: Food, type: 'data' | 'edit', params: object, component: CellComponent | undefined) => {
-				const score = (dat.hp + dat.stamina + dat.eitr) * dat.durationInMinutes;
-				return score;
+			mutator: (cellValue: number, foodRow: FoodRow, type: 'data' | 'edit', params: object, component: CellComponent | undefined) => {
+				const score = (foodRow.hp + foodRow.stamina + foodRow.eitr) * foodRow.durationInMinutes;
+				return score ? score : 0;
 			}
 		});
 		columDefs.push(infoGroupColumDef);
@@ -453,10 +453,10 @@ export class Component {
 			data: this.tabledata, //assign data to table
 			//layout: "fitColumns", //fit columns to width of table (optional)
 			//layout: "fitDataTable",
-			//layoutColumnsOnNewData: true,
+			layoutColumnsOnNewData: true,
 			// responsiveLayout:"hide", // hide rows that no longer fit
 			// responsiveLayout:"collapse", // collapse columns that no longer fit on the table into a list under the row
-			//resizableRows: true, // this option takes a boolean value (default = false)
+			resizableRows: false, // this option takes a boolean value (default = false)
 			selectable: true, //make rows selectable
 			columns: columDefs,
 		};
@@ -477,13 +477,16 @@ export class Component {
 				let totalScore = 0;
 				const dur: number[] = [];
 				for (const row of rows) {
-					const dat: FoodRow = row.getData();
-					totalHP += dat.hp;
-					totalStamina += dat.stamina;
-					totalEitr += dat.eitr;
-					totalHPs += dat.hpPerSecond;
-					dur.push(dat.durationInMinutes);
-					totalScore += (dat.hp + dat.stamina + dat.eitr) * dat.durationInMinutes;
+					const foodRow: FoodRow = row.getData();
+					totalHP += foodRow.hp;
+					totalStamina += foodRow.stamina;
+					totalEitr += foodRow.eitr;
+					totalHPs += foodRow.hpPerSecond;
+					dur.push(foodRow.durationInMinutes);
+					const totalScoreTmp = (foodRow.hp + foodRow.stamina + foodRow.eitr) * foodRow.durationInMinutes;
+					if (totalScoreTmp) {
+						totalScore += totalScoreTmp;
+					}
 				}
 				const min = Math.min.apply(null, dur);
 				const max = Math.max.apply(null, dur);
@@ -502,9 +505,9 @@ export class Component {
 			if (filters.length > 0) {
 				const keep: string[] = [];
 				for (const row /* RowComponent */ of rows) {
-					const dat: FoodRow = row.getData();
+					const foodRow: FoodRow = row.getData();
 					for (const resource /* string */ of this.resources) {
-						if ((dat as any)[resource]) {
+						if ((foodRow as any)[resource]) {
 							keep.push(resource);
 						}
 					}
@@ -519,7 +522,7 @@ export class Component {
 		});
 	}
 
-	buildDataReset(data: ValheimFood) {
+	buildDataReset(valheimFood: ValheimFood) {
 		document.getElementById("json-clear")?.addEventListener("click", (event: MouseEvent) => {
 			window.localStorage.removeItem(this.localStorageJsonName);
 			window.localStorage.removeItem(this.localStorageVersionName);
