@@ -83,6 +83,7 @@ export class Component {
 	table!: Tabulator;
 
 	init(): void {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		($('.selectpicker') as any).selectpicker();
 
 		try {
@@ -90,6 +91,7 @@ export class Component {
 			const localStorageVersionNameValue = window.localStorage.getItem(this.localStorageVersionName);
 			if (localStorageJsonNameValue && localStorageVersionNameValue == this.version) {
 				const __data: ValheimFood = JSON.parse(localStorageJsonNameValue);
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const test = __data.resourceTiers;
 				this.app(__data);
 			} else {
@@ -122,7 +124,9 @@ export class Component {
 	}
 
 	buildResources(valheimFood: ValheimFood) {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		valheimFood.resourceTiers.forEach((resourceTier: string[], i: number) => {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			resourceTier.forEach((resourceTierResource: string, ii: number) => {
 				this.resources.push(resourceTierResource);
 			});
@@ -133,6 +137,7 @@ export class Component {
 		for (const resource of this.resources) {
 			let colorClass = '';
 			valheimFood.resourceTiers.forEach((resourceTier: string[], i: number) => {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				resourceTier.forEach((resourceTierResource: string, ii: number) => {
 					if (resource == resourceTierResource) {
 						colorClass = valheimFood.tiers[i];
@@ -150,6 +155,7 @@ export class Component {
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	buildResourceChecks(valheimFood: ValheimFood) {
 		for (const resource of this.resources) {
 			const fixedName = resource.replace(' ', '_');
@@ -167,6 +173,7 @@ export class Component {
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	buildResourceStyles(valheimFood: ValheimFood) {
 		for (const resource of this.resources) {
 			const style: HTMLStyleElement = document.createElement("style");
@@ -177,8 +184,10 @@ export class Component {
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	buildTableDate(valheimFood: ValheimFood) {
 		let foodId = 0;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		for (const [name, food] of Object.entries(valheimFood.food)) {
 			let ft: FoodTypeType;
 			switch (food.type) {
@@ -213,6 +222,7 @@ export class Component {
 			foodId++;
 			for (const resource /* string*/ of this.resources) {
 				const count = food.resources[resource];
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				(row as any)[resource] = count ? String(count) : '';
 			}
 			this.tabledata.push(row);
@@ -303,21 +313,26 @@ export class Component {
 			}
 		}
 
-		//
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		(<HTMLButtonElement>document.getElementById("filter")).addEventListener("click", (event: MouseEvent) => {
 			updateFilter();
 		});
 
-		//
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		(<HTMLButtonElement>document.getElementById("filter-clear")).addEventListener("click", (event: MouseEvent) => {
 			nameFilter.val('');
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(tierFilter as any).selectpicker('val', ['1', '2', '3', '4', '5', '6']);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(starredFilter as any).selectpicker('val', ['y', 'n']);
 			hpFilter.val('');
 			staminaFilter.val('');
 			eitrFilter.val('');
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(typeFilter as any).selectpicker('val', ['W', 'Y', 'R', 'B', 'M']);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(hpsFilter as any).selectpicker('val', '');
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(durationFilter as any).selectpicker('val', '');
 			//
 			clearFiltering();
@@ -330,6 +345,7 @@ export class Component {
 			title: "Name",
 			field: "name",
 			frozen: true,
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const foodRow: FoodRow = cell.getData() as FoodRow;
 				const cellValue: number = cell.getValue();
@@ -359,6 +375,7 @@ export class Component {
 			sorter: "number",
 			headerVertical: true,
 			hozAlign: "center",
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const foodRow: FoodRow = cell.getData() as FoodRow;
 				const cellValue: number = cell.getValue();
@@ -399,6 +416,7 @@ export class Component {
 			field: "type",
 			headerVertical: true,
 			hozAlign: "center",
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const cellValue: string = cell.getValue();
 				if (cellValue == "Y") {
@@ -435,6 +453,7 @@ export class Component {
 			field: "score",
 			sorter: "number",
 			headerVertical: true,
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			mutator: (cellValue: number, foodRow: FoodRow, type: 'data' | 'edit', params: object, component: CellComponent | undefined) => {
 				const score = (foodRow.hp + foodRow.stamina + foodRow.eitr) * foodRow.durationInMinutes;
 				return score ? score : 0;
@@ -506,6 +525,7 @@ export class Component {
 				for (const row /* RowComponent */ of rows) {
 					const foodRow: FoodRow = row.getData();
 					for (const resource /* string */ of this.resources) {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						if ((foodRow as any)[resource]) {
 							keep.push(resource);
 						}
@@ -520,7 +540,9 @@ export class Component {
 		});
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	buildDataReset(valheimFood: ValheimFood) {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		(<HTMLButtonElement>document.getElementById("json-clear")).addEventListener("click", (event: MouseEvent) => {
 			window.localStorage.removeItem(this.localStorageJsonName);
 			window.localStorage.removeItem(this.localStorageVersionName);
