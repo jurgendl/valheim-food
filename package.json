@@ -1,5 +1,5 @@
 {
-  "name": "webpack-seed",
+  "name": "valheim-food",
   "sideEffects": [
     "**/*.css",
     "**/*.scss"
