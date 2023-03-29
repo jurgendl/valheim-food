@@ -13,7 +13,14 @@ import {
 
 
 type Tier = 1 | 2 | 3 | 4 | 5 | 6;
-type FoodTypeType = 'R' | 'Y' | 'W' | 'B' | 'M';
+
+export enum FoodTypeShort {
+	R = "R",
+	Y = "Y",
+	W = "W",
+	B = "B",
+	M = "M"
+}
 
 export enum FoodType {
 	yellow = "yellow",
@@ -50,7 +57,7 @@ export interface FoodRow {
 	hp: number;
 	stamina: number;
 	eitr: number;
-	type: FoodTypeType;
+	type: FoodTypeShort;
 	hpPerSecond: number;
 	durationInMinutes: number;
 }
@@ -189,22 +196,22 @@ export class Component {
 		let foodId = 0;
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		for (const [name, food] of Object.entries(valheimFood.food)) {
-			let ft: FoodTypeType;
+			let ft: FoodTypeShort;
 			switch (food.type) {
 				case FoodType.mead:
-					ft = 'M';
+					ft = FoodTypeShort.M;
 					break;
 				case FoodType.blue:
-					ft = 'B';
+					ft = FoodTypeShort.B;
 					break;
 				case FoodType.red:
-					ft = 'R';
+					ft = FoodTypeShort.R;
 					break;
 				case FoodType.white:
-					ft = 'W';
+					ft = FoodTypeShort.W;
 					break;
 				case FoodType.yellow:
-					ft = 'Y';
+					ft = FoodTypeShort.Y;
 					break;
 			}
 			const row: FoodRow = {
@@ -509,7 +516,6 @@ export class Component {
 				}
 				const min = Math.min.apply(null, dur);
 				const max = Math.max.apply(null, dur);
-				console.log(dur, min, max);
 				$('#totalPoints').val('SELECTED TOTAL: HP=' + totalHP + ' +' + totalHPs + '/s, Stamina=' + totalStamina + ', Eitr=' + totalEitr + ' [' + min + ((min == max) ? '' : ('-' + max)) + 'm] > ' + totalScore + ' score');
 			}
 		});
