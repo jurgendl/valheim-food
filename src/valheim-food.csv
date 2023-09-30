@@ -1,4 +1,4 @@
-,"T","*","hp","hpS","sta","staS","type","hp/s","m","raspberries","honey","neck tail","boar meat","deer meat","fish","greydwarf eye","mushroom","dandelion","coal","blueberries","carrot","yellow mushroom","thistle","turnip","ooze","entrails","bloodbag","serpent meat","onion","wolf meat","freeze gland","cloudberries ","lox meat","barley","egg","chicken meat","magecap ","jotun puffs ","seeker meat ","hare meat","blood clot","sap","royal jelly","anglerfish"
+name,"T","*","hp","hpS","sta","staS","type","hp/s","m","raspberries","honey","neck tail","boar meat","deer meat","fish","greydwarf eye","mushroom","dandelion","coal","blueberries","carrot","yellow mushroom","thistle","turnip","ooze","entrails","bloodbag","serpent meat","onion","wolf meat","freeze gland","cloudberries ","lox meat","barley","egg","chicken meat","magecap ","jotun puffs ","seeker meat ","hare meat","blood clot","sap","royal jelly","anglerfish"
 "raspberries",1,,7,7,20,20,"y",1,10,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 "honey",1,"*",8,"5,33333333333333",35,"23,3333333333333","y",1,15,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 "grilled neck tail",1,,25,"12,5",8,4,"r",2,20,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
