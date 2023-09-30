@@ -41,7 +41,7 @@ function convertCSVToJson() {
 				let i = 0;
 				for (const header of headers) {
 					if (i >= 10) {
-						console.log(`${header}`);
+						//console.log(`${header}`);
 						csvHeaders.push(header);
 					}
 					i++;
@@ -111,14 +111,19 @@ function convertCSVToJson() {
 				data.food[food.name!] = food;
 
 				for (const header of csvHeaders) {
-					const val = row[header]['0'];
-					if (val) food.resources[header] = parseInt(val);
+					let val = `${row[header]}`;
+					if (val && val.trim() !== '') {
+						if (val.toString().includes(',')) {
+							val = val.toString().replace(',', '.');
+						}
+						food.resources[header] = parseFloat(val);
+					}
 				}
-				console.log(food);
+				//console.log(food);
 			})
 			.on('end', () => {
-				const outputFile = `./valheim-food.json`;
-				fs.writeFileSync(outputFile, JSON.stringify(data));
+				const outputFile = `./src/assets/valheim-food.json`;
+				fs.writeFileSync(outputFile, JSON.stringify(data, null, 2));
 				console.log('Conversion completed successfully.');
 			});
 	} catch (ex) {
