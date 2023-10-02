@@ -1,6 +1,6 @@
-import {Component} from "../src/components/component";
+import {App} from "../src/components/app";
 
-let app: Component;
+let app: App;
 
 describe('A suite is just a function', function () {
 	beforeEach(() => {

@@ -2,14 +2,7 @@
 // npm install tabulator-tables --save
 // npm i --save-dev @types/tabulator-tables
 
-import {
-	CellComponent,
-	ColumnDefinition,
-	Filter,
-	Options,
-	RowComponent,
-	TabulatorFull as Tabulator
-} from 'tabulator-tables';
+import {CellComponent, ColumnDefinition, Filter, Options, RowComponent, TabulatorFull as Tabulator} from 'tabulator-tables';
 
 
 type Tier = 1 | 2 | 3 | 4 | 5 | 6;
@@ -63,7 +56,7 @@ export interface FoodRow {
 }
 
 // noinspection TypeScriptUnresolvedFunction
-export class Component {
+export class App {
 	version = '1.5';
 
 	localStorageJsonName = "valheim-food";
@@ -166,13 +159,15 @@ export class Component {
 	buildResourceChecks(valheimFood: ValheimFood) {
 		for (const resource of this.resources) {
 			const fixedName = resource.replace(' ', '_');
-			const template = '<div class="col-2"><div style="width:unset;display:inline;" class="imgcheck input-group input-group-sm"><label class="checkbox-inline" for="check_' + fixedName + '"><input checked="checked" value="' + resource + '" style="display: none;" type="checkbox" id="check_' + fixedName + '"><img id="is_' + fixedName + '" width="32" height="32" src="assets/images/' + resource + '.png">&nbsp;<span style="font-size:11px" id="lbl_' + fixedName + '">' + resource + '</span></label></div></div>'
+			const template = `<div class="col-2"><div style="width:unset;display:inline;" class="imgcheck input-group input-group-sm"><label class="checkbox-inline" for="check_${fixedName}"><input checked="checked" value="${resource}" style="display: block;" type="checkbox" id="check_${fixedName}"><img id="is_${fixedName}" width="32" height="32" src="assets/images/${resource}.png">&nbsp;<span style="font-size:11px" id="lbl_${fixedName}">${resource}</span></label></div></div>`
+			//console.log('template', template);
 			//
 			$('#resourceChecks').append(template);
 			//
-			$('#check_' + fixedName).click(() => {
+			$('#check_' + fixedName).click((ev) => {
+				console.log('buildResourceChecks', (ev.target as HTMLInputElement).checked);
 				if (resource) {
-					const checked = $(this).is(':checked');
+					const checked = (ev.target as HTMLInputElement).checked;
 					const style: HTMLStyleElement = <HTMLStyleElement>document.getElementById("style-" + resource);
 					style.disabled = checked;
 				}
