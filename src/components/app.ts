@@ -350,7 +350,7 @@ export class App {
 						}
 					}
 				}
-				return `<div style="background-color:${color}" title="${tooltip}"><img width=32 height=32 src="assets/images/${cellValue}.png">&nbsp;${cellValue}</div>`;
+				return `<div style="background-color:${color};color:black;" title="${tooltip}"><img width=32 height=32 src="assets/images/${cellValue}.png">&nbsp;${cellValue}</div>`;
 			}
 		});
 		const infoGroupColumDef: ColumnDefinition = {//create column group
@@ -368,7 +368,7 @@ export class App {
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const foodRow: FoodRow = cell.getData() as FoodRow;
 				const cellValue: number = cell.getValue();
-				return `<span style='background-color:${this.tierColors.get(foodRow.tier)};display:block;width:100%;height:100%' title='${cellValue}'>${cellValue}</span>`;
+				return `<span style='background-color:${this.tierColors.get(foodRow.tier)};color:black;display:block;width:100%;height:100%' title='${cellValue}'>${cellValue}</span>`;
 			}
 		});
 		infoGroupColumDef.columns?.push({
@@ -409,15 +409,15 @@ export class App {
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const cellValue: string = cell.getValue();
 				if (cellValue == "Y") {
-					return `<span title='yellow' style='background-color:#ffffcd;display:block;width:100%;height:100%'>Y</span>`;
+					return `<span title='yellow' style='background-color:#ffffcd;color:black;display:block;width:100%;height:100%'>Y</span>`;
 				} else if (cellValue == "R") {
-					return `<span title='red' style='background-color:#ffc2c2;display:block;width:100%;height:100%'>R</span>`;
+					return `<span title='red' style='background-color:#ffc2c2;color:black;display:block;width:100%;height:100%'>R</span>`;
 				} else if (cellValue == "B") {
-					return `<span title='blue' style='background-color:#cfe0f4;display:block;width:100%;height:100%'>B</span>`;
+					return `<span title='blue' style='background-color:#cfe0f4;color:black;display:block;width:100%;height:100%'>B</span>`;
 				} else if (cellValue == "W") {
-					return `<span title='white' style='background-color:#dddddd;display:block;width:100%;height:100%'>W</span>`;
+					return `<span title='white' style='background-color:#dddddd;color:black;display:block;width:100%;height:100%'>W</span>`;
 				} else if (cellValue == "M") {
-					return `<span title='mead' style='background-color:#ffdbb6;display:block;width:100%;height:100%'>M</span>`;
+					return `<span title='mead' style='background-color:#ffdbb6;color:black;display:block;width:100%;height:100%'>M</span>`;
 				} else {
 					return cellValue;
 				}

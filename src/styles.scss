@@ -1,3 +1,7 @@
+body {
+	transition: color 0.2s ease-out, background 0.2s ease-out;
+}
+
 .tabulator-cell svg {
 	background-color: rgba(255, 255, 255, .5);
 }
@@ -14,35 +18,34 @@
 	width: 100% !important;
 }
 
-.imgcheck label {
-	cursor: pointer;
-}
+.imgcheck {
+	label {
+		cursor: pointer;
+		display: flex;
 
-.imgcheck img {
-	border: 3px solid rgba(255, 0, 0, .25);
-	border-radius: 50%;
-}
+		span {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
 
-.imgcheck input[type=checkbox]:checked ~ img {
-	border-color: rgba(100, 200, 100, .75);
-}
+	img {
+		border: 3px solid rgba(255, 0, 0, .25);
+		border-radius: 50%;
+	}
 
-.imgcheck input[type=checkbox]:not(:checked) ~ span {
-	color: rgba(0,0,0,0.5);
-}
+	input[type=checkbox]:checked ~ img {
+		border-color: rgba(100, 200, 100, .75);
+	}
 
-.imgcheck input[type=checkbox]:not(:checked) ~ img {
-	filter: grayscale(75%);
-}
+	input[type=checkbox]:not(:checked) ~ span {
+		color: rgba(0, 0, 0, 0.5);
+	}
 
-.imgcheck label {
-	display: flex;
-}
-
-.imgcheck label span {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	input[type=checkbox]:not(:checked) ~ img {
+		filter: grayscale(75%);
+	}
 }
 
 .tabulator-cell div {
@@ -134,3 +137,72 @@
 	height: 32px;
 	background-size: 32px;
 }
+
+/* ------------------------------------------------------ */
+
+#darkmode-toggle-container {
+	position: fixed;
+	top: 5px;
+	right: 10px;
+	z-index: 1000;
+}
+
+body {
+	div.darkmode {
+		display: inline-block;
+		cursor: pointer;
+	}
+	&.dark .darkmode .light,
+	&:not(.dark) .darkmode .dark {
+		display: none;
+	}
+}
+
+body.dark {
+	.bootstrap-select>.dropdown-toggle.bs-placeholder,.bootstrap-select>.dropdown-toggle.bs-placeholder:active,.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+		color: unset;
+	}
+
+	.tabulator ,
+	.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover,
+	.tabulator-row .tabulator-cell ,
+	.tabulator .tabulator-header ,
+	.tabulator .tabulator-header .tabulator-col {
+		background-color: #333
+	}
+
+	.imgcheck {
+		input[type=checkbox]:not(:checked) ~ span {
+			color: rgba(255, 255, 255, 0.5);
+		}
+	}
+
+	.tabulator-row .tabulator-cell {
+		&.meadows {
+			background-color: #ffffcd;
+			color: black;
+		}
+		&.black-forest {
+			background-color: #bbe33d;
+			color: black;
+		}
+		&.swamp {
+			background-color: #cfe0f4;
+			color: black;
+		}
+		&.mountain {
+			background-color: #dddddd;
+			color: black;
+		}
+		&.plains {
+			background-color: #ffdbb6;
+			color: black;
+		}
+		&.mistlands {
+			background-color: #ffc2c2;
+			color: black;
+		}
+	}
+}
+
+/* ------------------------------------------------------ */
