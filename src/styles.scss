@@ -2,10 +2,6 @@ body {
 	transition: color 0.2s ease-out, background 0.2s ease-out;
 }
 
-.tabulator-cell svg {
-	background-color: rgba(255, 255, 255, .5);
-}
-
 .tabulator-cell {
 	cursor: crosshair;
 }
@@ -163,18 +159,28 @@ body.dark {
 		color: unset;
 	}
 
-	.tabulator ,
-	.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover,
-	.tabulator-row .tabulator-cell ,
-	.tabulator .tabulator-header ,
+	.tabulator {
+		background-color: #333;
+	}
+	.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+		background-color: #333;
+	}
+	.tabulator-row .tabulator-cell {
+		background-color: #333;
+	}
+	.tabulator .tabulator-header {
+		background-color: #333;
+	}
 	.tabulator .tabulator-header .tabulator-col {
-		background-color: #333
+		background-color: #333;
 	}
 
-	.imgcheck {
-		input[type=checkbox]:not(:checked) ~ span {
-			color: rgba(255, 255, 255, 0.5);
-		}
+	.tabulator-row.tabulator-selected .tabulator-cell {
+		background-color: #003276;
+	}
+
+	.tabulator {
+		font-size: 15px;
 	}
 
 	.tabulator-row .tabulator-cell {
@@ -201,6 +207,12 @@ body.dark {
 		&.mistlands {
 			background-color: #ffc2c2;
 			color: black;
+		}
+	}
+
+	.imgcheck {
+		input[type=checkbox]:not(:checked) ~ span {
+			color: rgba(255, 255, 255, 0.5);
 		}
 	}
 }
