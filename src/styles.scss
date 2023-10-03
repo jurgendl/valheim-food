@@ -14,12 +14,35 @@
 	width: 100% !important;
 }
 
+.imgcheck label {
+	cursor: pointer;
+}
+
 .imgcheck img {
-	border: 3px solid rgba(200, 100, 100, .75)
+	border: 3px solid rgba(255, 0, 0, .25);
+	border-radius: 50%;
 }
 
 .imgcheck input[type=checkbox]:checked ~ img {
-	border: 3px solid rgba(100, 200, 100, .75)
+	border-color: rgba(100, 200, 100, .75);
+}
+
+.imgcheck input[type=checkbox]:not(:checked) ~ span {
+	color: rgba(0,0,0,0.5);
+}
+
+.imgcheck input[type=checkbox]:not(:checked) ~ img {
+	filter: grayscale(75%);
+}
+
+.imgcheck label {
+	display: flex;
+}
+
+.imgcheck label span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .tabulator-cell div {
@@ -38,7 +61,7 @@
 }*/
 
 .meadows {
-	background-color: #f7f781;
+	background-color: #ffffcd;
 }
 
 .black-forest {
@@ -46,7 +69,7 @@
 }
 
 .swamp {
-	background-color: #b4c7dc;
+	background-color: #cfe0f4;
 }
 
 .mountain {

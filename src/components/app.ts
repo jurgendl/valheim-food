@@ -66,9 +66,9 @@ export class App {
 	jsonUrl = 'assets/valheim-food.json?v=' + this.version;
 
 	tierColors = new Map<number, string>([
-		[1, '#f7f781'],//meadows
+		[1, '#ffffcd'],//meadows
 		[2, '#bbe33d'],//dark forest
-		[3, '#b4c7dc'],//swamp
+		[3, '#cfe0f4'],//swamp
 		[4, '#dddddd'],//mountains
 		[5, '#ffdbb6'],//plains
 		[6, '#ffc2c2'],//mistlands
@@ -153,7 +153,7 @@ export class App {
 	buildResourceChecks(valheimFood: ValheimFood) {
 		for (const resource of this.resources) {
 			const fixedName = resource.replace(' ', '_');
-			const template = `<div class="col-2"><div style="width:unset;display:inline;" class="imgcheck input-group input-group-sm"><label class="checkbox-inline" for="check_${fixedName}"><input checked="checked" value="${resource}" style="display: none;" type="checkbox" id="check_${fixedName}"><img id="is_${fixedName}" width="32" height="32" src="assets/images/${resource}.png">&nbsp;<span style="font-size:11px" id="lbl_${fixedName}">${resource}</span></label></div></div>`
+			const template = `<div class='col-xl-1 col-lg-2 col-md-3 col-sm-4 col-4'><div style='width:unset;display:inline;' class='imgcheck input-group input-group-sm'><label class='checkbox-inline' for='check_${fixedName}'><input checked='checked' value='${resource}' style='display: none;' type='checkbox' id='check_${fixedName}'><img id='is_${fixedName}' width='32' height='32' src='assets/images/${resource}.png'>&nbsp;<span style='font-size:11px' id='lbl_${fixedName}'>${resource}</span></label></div></div>`
 			//
 			$('#resourceChecks').append(template);
 			//
@@ -409,11 +409,11 @@ export class App {
 			formatter: (cell: CellComponent, formatterParams: object) => {
 				const cellValue: string = cell.getValue();
 				if (cellValue == "Y") {
-					return `<span title='yellow' style='background-color:#ffff84;display:block;width:100%;height:100%'>Y</span>`;
+					return `<span title='yellow' style='background-color:#ffffcd;display:block;width:100%;height:100%'>Y</span>`;
 				} else if (cellValue == "R") {
 					return `<span title='red' style='background-color:#ffc2c2;display:block;width:100%;height:100%'>R</span>`;
 				} else if (cellValue == "B") {
-					return `<span title='blue' style='background-color:#b4c7dc;display:block;width:100%;height:100%'>B</span>`;
+					return `<span title='blue' style='background-color:#cfe0f4;display:block;width:100%;height:100%'>B</span>`;
 				} else if (cellValue == "W") {
 					return `<span title='white' style='background-color:#dddddd;display:block;width:100%;height:100%'>W</span>`;
 				} else if (cellValue == "M") {
