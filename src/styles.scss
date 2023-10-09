@@ -155,28 +155,79 @@ body {
 }
 
 body.dark {
+	.tabulator.table-dark {
+		.tabulator-header {
+			.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+				background-color: #343a40;
+				color: #eee;
+				border: 1px solid #666;
+
+				&:hover {
+					background-color: #051734;
+				}
+			}
+		}
+
+		.tabulator-row {
+			.tabulator-cell {
+				background-color: #343a40;
+				color: #eee;
+			}
+
+			&:hover {
+				.tabulator-cell {
+					background-color: #051734;
+				}
+			}
+
+			&.tabulator-selected {
+				.tabulator-cell {
+					background-color: #0F3405;
+				}
+
+				&:hover {
+					.tabulator-cell {
+						background-color: #1c480d;
+					}
+				}
+			}
+		}
+
+		&.table-striped {
+			.tabulator-row {
+				&:nth-child(2n) {
+					.tabulator-cell {
+						background-color: #4c545d;
+					}
+
+					&:hover {
+						.tabulator-cell {
+							background-color: #051734;
+						}
+					}
+				}
+
+				&.tabulator-selected {
+					&:nth-child(2n) {
+						.tabulator-cell {
+							background-color: #0F3405;
+						}
+
+						&:hover {
+							.tabulator-cell {
+								background-color: #1c480d;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+body.dark {
 	.bootstrap-select>.dropdown-toggle.bs-placeholder,.bootstrap-select>.dropdown-toggle.bs-placeholder:active,.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
 		color: unset;
-	}
-
-	.tabulator {
-		background-color: #333;
-	}
-	.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
-		background-color: #333;
-	}
-	.tabulator-row .tabulator-cell {
-		background-color: #333;
-	}
-	.tabulator .tabulator-header {
-		background-color: #333;
-	}
-	.tabulator .tabulator-header .tabulator-col {
-		background-color: #333;
-	}
-
-	.tabulator-row.tabulator-selected .tabulator-cell {
-		background-color: #003276;
 	}
 
 	.tabulator {
@@ -185,28 +236,28 @@ body.dark {
 
 	.tabulator-row .tabulator-cell {
 		&.meadows {
-			background-color: #ffffcd;
-			color: black;
+			background-color: #ffffcd !important;
+			color: black !important;
 		}
 		&.black-forest {
-			background-color: #bbe33d;
-			color: black;
+			background-color: #bbe33d !important;
+			color: black !important;
 		}
 		&.swamp {
-			background-color: #cfe0f4;
-			color: black;
+			background-color: #cfe0f4 !important;
+			color: black !important;
 		}
 		&.mountain {
-			background-color: #dddddd;
-			color: black;
+			background-color: #dddddd !important;
+			color: black !important;
 		}
 		&.plains {
-			background-color: #ffdbb6;
-			color: black;
+			background-color: #ffdbb6 !important;
+			color: black !important;
 		}
 		&.mistlands {
-			background-color: #ffc2c2;
-			color: black;
+			background-color: #ffc2c2 !important;
+			color: black !important;
 		}
 	}
 
