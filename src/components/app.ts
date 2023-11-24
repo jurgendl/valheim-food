@@ -57,7 +57,7 @@ export interface FoodRow {
 
 // noinspection TypeScriptUnresolvedFunction
 export class App {
-	version = '1.5';
+	version = '1.6';
 
 	localStorageJsonName = "valheim-food";
 
