@@ -1,33 +1,65 @@
-function darkModeToggle(isDarkMode) {
-    document.getElementById("theme").href = isDarkMode ? "assets/darkly.bootstrap.min.css" : "assets/original.bootstrap.min.css";
-    if (isDarkMode) {
-        $(".no-thead-dark")
-            .removeClass("no-thead-dark")
-            .addClass("thead-dark");
-        $(".no-table-dark")
-            .removeClass("no-table-dark")
-            .addClass("table-dark");
-    } else {
-        $(".thead-dark")
-            .removeClass("thead-dark")
-            .addClass("no-thead-dark");
-        $(".table-dark")
-            .removeClass("table-dark")
-            .addClass("no-table-dark");
+document.addEventListener("DOMContentLoaded", () => {
+    {
+        // Create a style element
+        var styleElement = document.createElement("style");
+        // Define the CSS rules
+        var cssRules = `
+			#darkmode-toggle-container {
+				position: fixed;
+				top: 5px;
+				right: 10px;
+				z-index: 1000;
+			}
+			#darkmode-toggle {
+				display: inline-block;
+				cursor: pointer;
+			}
+			body[data-bs-theme="dark"] #darkmode-toggle #light,
+			body:not([data-bs-theme="dark"]) #darkmode-toggle #dark {
+				display: none;
+			}
+		`;
+        // Set the CSS rules for the style element
+        styleElement.innerHTML = cssRules;
+        // Append the style element to the head of the document
+        document.head.appendChild(styleElement);
     }
-}
 
-$(".darkmode").click(function () {
-    $("body").toggleClass("dark");
-    const isDarkMode = $("body").hasClass("dark");
-    darkModeToggle(isDarkMode);
-    localStorage.setItem("dark-mode", isDarkMode);
-});
+    {
+        // Create container element
+        var containerElement = document.createElement("div");
+        containerElement.id = "darkmode-toggle-container";
+        // Create toggle element
+        var toggleElement = document.createElement("div");
+        toggleElement.id = "darkmode-toggle";
+        // Create light icon element
+        var lightIconElement = document.createElement("div");
+        lightIconElement.id = "light";
+        lightIconElement.className = "fa-solid fa-sun";
+        // Create dark icon element
+        var darkIconElement = document.createElement("div");
+        darkIconElement.id = "dark";
+        darkIconElement.className = "fa-regular fa-moon";
+        // Append elements to form the structure
+        toggleElement.appendChild(lightIconElement);
+        toggleElement.appendChild(darkIconElement);
+        containerElement.appendChild(toggleElement);
+        // Append the container element to the body
+        document.body.appendChild(containerElement);
+    }
 
-// on document load, check if dark mode is set and apply it
-addEventListener("load", (event) => {
-    console.log("page is fully loaded");
-    const isDarkMode = localStorage.getItem("dark-mode") === "true";
-    if (isDarkMode) $("body").addClass("dark");
-    darkModeToggle(isDarkMode);
+    function setDarkMode(isDarkMode) {
+        document.body.dataset.bsTheme = isDarkMode ? 'dark' : 'light';
+        localStorage.setItem("dark-mode", isDarkMode);
+        if (typeof changeDarkMode === 'function') changeDarkMode(isDarkMode);
+    }
+    function isDarkMode() {
+        return localStorage.getItem("dark-mode") == "true";
+    }
+
+    document.getElementById("darkmode-toggle").addEventListener("click", () => {
+        setDarkMode(!isDarkMode());
+    });
+
+    setDarkMode(isDarkMode());
 });

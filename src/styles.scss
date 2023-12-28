@@ -136,25 +136,7 @@ body {
 
 /* ------------------------------------------------------ */
 
-#darkmode-toggle-container {
-	position: fixed;
-	top: 5px;
-	right: 10px;
-	z-index: 1000;
-}
-
-body {
-	div.darkmode {
-		display: inline-block;
-		cursor: pointer;
-	}
-	&.dark .darkmode .light,
-	&:not(.dark) .darkmode .dark {
-		display: none;
-	}
-}
-
-body.dark {
+body[data-bs-theme="dark"] {
 	.tabulator.table-dark {
 		.tabulator-header {
 			.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
@@ -225,7 +207,7 @@ body.dark {
 	}
 }
 
-body.dark {
+body[data-bs-theme="dark"] {
 	.bootstrap-select>.dropdown-toggle.bs-placeholder,.bootstrap-select>.dropdown-toggle.bs-placeholder:active,.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
 		color: unset;
 	}
