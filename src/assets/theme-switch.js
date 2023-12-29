@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				position: fixed;
 				top: 5px;
 				right: 10px;
-				z-index: 1000;
+				z-index: 9999;
 			}
 			#darkmode-toggle {
 				display: inline-block;
@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
 			body:not([data-bs-theme="dark"]) #darkmode-toggle #dark {
 				display: none;
 			}
+			#light {
+                color: #ffea3d;
+                text-shadow: 0 0 3px #B90000D4, 0 0 3px #12122899;
+            }
+            #dark {
+                color: #8a6f6f;
+                text-shadow: 0 0 3px #FFE8E8, 0 0 5px #EFEFFF;
+            }
 		`;
         // Set the CSS rules for the style element
         styleElement.innerHTML = cssRules;
