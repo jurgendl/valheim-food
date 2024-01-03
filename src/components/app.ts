@@ -438,11 +438,10 @@ export class App {
 			hozAlign: "center"
 		});
 		infoGroupColumDef.columns?.push({
-			title: "Score",
+			title: "<span title='(HP + stamina + Eitr) * duration'>Score</span>",
 			field: "score",
 			sorter: "number",
 			headerVertical: true,
-
 			mutator: (cellValue: number, foodRow: FoodRow, type: 'data' | 'edit', params: object, component: CellComponent | undefined) => {
 				const score = (foodRow.hp + foodRow.stamina + foodRow.eitr) * foodRow.durationInMinutes;
 				return score ? score : 0;
@@ -467,6 +466,7 @@ export class App {
 			resizableRows: false, // this option takes a boolean value (default = false)
 			selectable: true, //make rows selectable
 			columns: columDefs,
+			rowHeight: 40,
 		};
 		this.table = new Tabulator("#valheim-food-table", options);
 
