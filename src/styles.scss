@@ -1,3 +1,5 @@
+@import 'tabulator-dark-mode.scss';
+
 body {
 	transition: color 0.2s ease-out, background 0.2s ease-out;
 }
@@ -135,77 +137,6 @@ body {
 }
 
 /* ------------------------------------------------------ */
-
-body[data-bs-theme="dark"] {
-	.tabulator.table-dark {
-		.tabulator-header {
-			.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-				background-color: #343a40;
-				color: #eee;
-				border: 1px solid #666;
-
-				&:hover {
-					background-color: #051734;
-				}
-			}
-		}
-
-		.tabulator-row {
-			.tabulator-cell {
-				background-color: #343a40;
-				color: #eee;
-			}
-
-			&:hover {
-				.tabulator-cell {
-					background-color: #051734;
-				}
-			}
-
-			&.tabulator-selected {
-				.tabulator-cell {
-					background-color: #0F3405;
-				}
-
-				&:hover {
-					.tabulator-cell {
-						background-color: #1c480d;
-					}
-				}
-			}
-		}
-
-		&.table-striped {
-			.tabulator-row {
-				&:nth-child(2n) {
-					.tabulator-cell {
-						background-color: #4c545d;
-					}
-
-					&:hover {
-						.tabulator-cell {
-							background-color: #051734;
-						}
-					}
-				}
-
-				&.tabulator-selected {
-					&:nth-child(2n) {
-						.tabulator-cell {
-							background-color: #0F3405;
-						}
-
-						&:hover {
-							.tabulator-cell {
-								background-color: #1c480d;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
 
 body[data-bs-theme="dark"] {
 	.bootstrap-select>.dropdown-toggle.bs-placeholder,.bootstrap-select>.dropdown-toggle.bs-placeholder:active,.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
