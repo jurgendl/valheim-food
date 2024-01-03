@@ -496,8 +496,15 @@ export class App {
 				}
 				const min = Math.min.apply(null, dur);
 				const max = Math.max.apply(null, dur);
-				const minmax = `${min}${min === max ? '' : `-${max}`}`;
-				$('#totalPoints').val(`SELECTED TOTAL: HP=${totalHP} +${totalHPs}/s, Stamina=${totalStamina}, Eitr=${totalEitr} [${minmax}m] > ${totalScore} score`);
+				let info = '';
+				if(totalHP > 0) info += ((info.length>0) ? "  +  " : "") + `${totalHP} HP`;
+				if(totalHPs > 0) info += ((info.length>0) ? "  +  " : "") + `${totalHPs} HP/S`;
+				if(totalStamina > 0) info += ((info.length>0) ? "  +  " : "") + `${totalStamina} stamina`;
+				if(totalEitr > 0) info += ((info.length>0) ? "  +  " : "") + `${totalEitr} Eitr`;
+				if(min === max) info += `   ⏲[${min}m]`;
+				else info += `   ⏲[${min}…${max}m]`;
+				info += `   »   ${totalScore} score`;
+				$('#totalPoints').val(info);
 			}
 		});
 		//
