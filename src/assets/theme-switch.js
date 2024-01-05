@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
         var cssRules = `
 			#darkmode-toggle-container {
 				position: fixed;
-				top: 5px;
-				right: 10px;
+				top: 1px;
+				right: 21px;
 				z-index: 9999;
 			}
 			#darkmode-toggle {
