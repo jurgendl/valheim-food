@@ -1,30 +1,44 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* https://stackoverflow.com/questions/56393880/how-do-i-detect-dark-mode-using-javascript */
+/* https://ultimatecourses.com/blog/detecting-dark-mode-in-javascript */
+/* https://github.com/vinorodrigues/bootstrap-dark-5/blob/main/docs/bootstrap-night.md */
+
+// !!! requires fontawesome 5/6 !!!
+
+document.addEventListener('DOMContentLoaded', () => {
+    const lightIconElementId = 'light-toggled';
+    const darkIconElementId = 'dark-toggled';
+    const darkmodeToggleContainerElementId = 'darkmode-toggle-container';
+    const darkmodeToggleElementId = 'darkmode-toggle';
+    const lightModeName = 'light';
+    const darkModeName = 'dark';
+    const darkModeThemeStorageKey = 'dark-mode';
+
     {
         // Create a style element
-        var styleElement = document.createElement("style");
+        const styleElement = document.createElement('style');
         // Define the CSS rules
-        var cssRules = `
-			#darkmode-toggle-container {
+        const cssRules = `
+			#${darkmodeToggleContainerElementId} {
 				position: fixed;
-				top: 1px;
-				right: 21px;
+				top: 2px;
+				right: 10px;
 				z-index: 9999;
 			}
-			#darkmode-toggle {
+			#${darkmodeToggleElementId} {
 				display: inline-block;
 				cursor: pointer;
 			}
-			body[data-bs-theme="dark"] #darkmode-toggle #light,
-			body:not([data-bs-theme="dark"]) #darkmode-toggle #dark {
+			body[data-bs-theme='${darkModeName}'] #${lightIconElementId},
+			body:not([data-bs-theme='${darkModeName}']) #${darkIconElementId} {
 				display: none;
 			}
-			#light {
+			#${lightIconElementId} {
                 color: #ffea3d;
-                text-shadow: 0 0 3px #B90000D4, 0 0 3px #12122899;
+                text-shadow: 0 0 3px #B90000D4, 0 0 3px #ffffffff
             }
-            #dark {
-                color: #8a6f6f;
-                text-shadow: 0 0 3px #FFE8E8, 0 0 5px #EFEFFF;
+            #${darkIconElementId} {
+                color: #eeeeee;
+                text-shadow: 0 0 3px #FFE8E8, 0 0 3px #000000ff;
             }
 		`;
         // Set the CSS rules for the style element
@@ -35,19 +49,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     {
         // Create container element
-        var containerElement = document.createElement("div");
-        containerElement.id = "darkmode-toggle-container";
+        const containerElement = document.createElement('div');
+        containerElement.id = darkmodeToggleContainerElementId;
         // Create toggle element
-        var toggleElement = document.createElement("div");
-        toggleElement.id = "darkmode-toggle";
+        const toggleElement = document.createElement('div');
+        toggleElement.id = darkmodeToggleElementId;
         // Create light icon element
-        var lightIconElement = document.createElement("div");
-        lightIconElement.id = "light";
-        lightIconElement.className = "fa-solid fa-sun";
+        const lightIconElement = document.createElement('div');
+        lightIconElement.id = lightIconElementId;
+        lightIconElement.className = 'fa-solid fa-sun';
         // Create dark icon element
-        var darkIconElement = document.createElement("div");
-        darkIconElement.id = "dark";
-        darkIconElement.className = "fa-regular fa-moon";
+        const darkIconElement = document.createElement('div');
+        darkIconElement.id = darkIconElementId;
+        darkIconElement.className = 'fa-regular fa-moon';
         // Append elements to form the structure
         toggleElement.appendChild(lightIconElement);
         toggleElement.appendChild(darkIconElement);
@@ -56,18 +70,35 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(containerElement);
     }
 
+    // Set the dark mode preference
     function setDarkMode(isDarkMode) {
-        document.body.dataset.bsTheme = isDarkMode ? 'dark' : 'light';
-        localStorage.setItem("dark-mode", isDarkMode);
-        if (typeof changeDarkMode === 'function') changeDarkMode(isDarkMode);
+        document.body.dataset.bsTheme = isDarkMode ? darkModeName : lightModeName; // Bootstrap 5 ligh dark mode switch
+        localStorage.setItem(darkModeThemeStorageKey, isDarkMode); // Store the dark mode preference in local storage
+        if (typeof changeDarkMode === 'function') changeDarkMode(isDarkMode); // Call the changeDarkMode function if it exists
     }
+
+    // Check if the dark mode preference is set to true
     function isDarkMode() {
-        return localStorage.getItem("dark-mode") == "true";
+        if (localStorage.getItem(darkModeThemeStorageKey)) return localStorage.getItem(darkModeThemeStorageKey) == 'true'; // Return the dark mode preference from local storage
+        return (window.matchMedia && window.matchMedia(`(prefers-color-scheme: ${darkModeName})`).matches); // Check if the user prefers dark mode
     }
 
-    document.getElementById("darkmode-toggle").addEventListener("click", () => {
+    // Toggle the dark mode preference
+    function toggleDarkMode() {
         setDarkMode(!isDarkMode());
-    });
+    }
 
+    // Listen for clicks on the toggle
+    document.getElementById(darkmodeToggleElementId).addEventListener('click', () => toggleDarkMode());
+
+    // Set the initial dark mode preference
     setDarkMode(isDarkMode());
+
+    // Listen for changes in the user's preference
+    if (window.matchMedia) {
+        window.matchMedia(`(prefers-color-scheme: ${darkModeName})`).addEventListener('change', event => {
+            const isDarkMode = event.matches;
+            setDarkMode(isDarkMode);
+        });
+    }
 });
