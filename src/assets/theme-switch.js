@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const styleElement = document.createElement('style');
         // Define the CSS rules
         const cssRules = `
+			html {
+				color-scheme: light dark;
+			}
 			#${darkmodeToggleContainerElementId} {
 				position: fixed;
 				top: 2px;
