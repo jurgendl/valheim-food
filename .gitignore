@@ -134,3 +134,4 @@ dist
 package-lock.json
 /.idea
 /valheim-food.json
+/src/.~lock.valheim-food.csv#

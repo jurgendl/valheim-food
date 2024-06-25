@@ -5,7 +5,7 @@
 import {CellComponent, ColumnDefinition, Filter, Options, RowComponent, TabulatorFull as Tabulator} from 'tabulator-tables';
 
 
-type Tier = 1 | 2 | 3 | 4 | 5 | 6;
+type Tier = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export enum FoodTypeShort {
 	R = "R",
@@ -57,7 +57,7 @@ export interface FoodRow {
 
 // noinspection TypeScriptUnresolvedFunction
 export class App {
-	version = '1.6';
+	version = '1.7';
 
 	localStorageJsonName = "valheim-food";
 
@@ -72,6 +72,7 @@ export class App {
 		[4, '#dddddd'],//mountains
 		[5, '#ffdbb6'],//plains
 		[6, '#ffc2c2'],//mistlands
+		[7, '#dccbff'],//ashlands
 	]);
 
 	resources: string[] = [];
