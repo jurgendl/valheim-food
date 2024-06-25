@@ -89,6 +89,9 @@ export class App {
 		try {
 			const localStorageJsonNameValue = window.localStorage.getItem(this.localStorageJsonName);
 			const localStorageVersionNameValue = window.localStorage.getItem(this.localStorageVersionName);
+			console.log('localStorageVersionNameValue ' + localStorageVersionNameValue);
+			console.log('version ' + this.version);
+			console.log(localStorageVersionNameValue == this.version);
 			if (localStorageJsonNameValue && localStorageVersionNameValue == this.version) {
 				const __data: ValheimFood = JSON.parse(localStorageJsonNameValue);
 				const test = __data.resourceTiers;
@@ -103,6 +106,7 @@ export class App {
 	}
 
 	fetchDataAgain(): void {
+		console.log('fetchDataAgain ' + this.jsonUrl);
 		fetch(this.jsonUrl)
 			.then((response: Response) => response.json() as Promise<ValheimFood>)
 			.then((valheimFood: ValheimFood) => this.app(valheimFood));
