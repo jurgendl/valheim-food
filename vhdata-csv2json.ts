@@ -18,12 +18,13 @@ class VHData {
 	tiers: string[] = ["meadows", "black forest", "swamp", "mountain", "plains", "mistlands", "ashlands"];
 
 	resourceTiers: string[][] = [
-		"raspberries\thoney\tneck tail\tboar meat\tdeer meat\tfish\tgreydwarf eye\tmushroom\tdandelion\tcoal".split("\t").map((s) => s.trim()), // 1 meadows
-		"blueberries\tcarrot\tyellow mushroom\tthistle".split("\t").map((s) => s.trim()), // 2 black forest
-		"turnip\tooze\tentrails\tbloodbag\tserpent meat".split("\t").map((s) => s.trim()), // 3 swamp
+		"raspberries\thoney\tneck tail\tboar meat\tdeer meat\tfish\tgreydwarf eye\tmushroom\tdandelion\tcoal\tfeathers\tperch".split("\t").map((s) => s.trim()), // 1 meadows
+		"blueberries\tcarrot\tyellow mushroom\tthistle\ttrollfish".split("\t").map((s) => s.trim()), // 2 black forest
+		"turnip\tooze\tentrails\tbloodbag\tserpent meat\ttoadstool\tcured squirrel hamstring\tfresh seaweed\tpowdered dragon eggshells\tpungent pebbles\tfragrant bundle\tfiery spice powder\therbs of the hidden hills\tgrasslands herbalist harvest\tmountain peak pepper\tseafarer's herbs\twoodland herb blend".split("\t").map((s) => s.trim()), // 3 swamp
 		"onion\twolf meat\tfreeze gland".split("\t").map((s) => s.trim()), // 4 mountain
-		"cloudberries \tlox meat\tbarley".split("\t").map((s) => s.trim()), // 5 plains
-		"egg\tchicken meat\tmagecap \tjotun puffs \tseeker meat \thare meat\tblood clot\tsap\troyal jelly\tanglerfish".split("\t").map((s) => s.trim()), // 6 mistlands
+		"cloudberries \tlox meat\tbarley\tgrouper".split("\t").map((s) => s.trim()), // 5 plains
+		"egg\tchicken meat\tmagecap \tjotun puffs \tseeker meat \thare meat\tblood clot\tsap\troyal jelly\tanglerfish\tscale hide".split("\t").map((s) => s.trim()), // 6 mistlands
+		"fiddlehead\tsmoke puff\tvineberry cluster\tvolture egg\tvolture meat\tasksvin tail\tbonemaw meat".split("\t").map((s) => s.trim()), // 7 ashlands
 	];
 
 	food: Record<string, Food> = {};
@@ -86,6 +87,7 @@ function convertCSVToJson() {
 					else if (type == "w") food.type = 'white';
 					else if (type == "r") food.type = 'red';
 					else if (type == "m") food.type = 'mead';
+					else if (type == "f") food.type = 'feast';
 					else throw new Error(`Invalid type ${type}`);
 					food.eitr = 0;
 				}
