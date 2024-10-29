@@ -1,5 +1,10 @@
-import * as fs from 'fs';
-import csv from 'csv-parser';
+// npm install -D ts-node typescript
+// npx ts-node vhdata-csv2json.ts
+
+/*import * as fs from 'fs';
+import csv from 'csv-parser';*/
+const fs = require('fs');
+const csv = require('csv-parser');
 
 class Food {
 	name: string | undefined;

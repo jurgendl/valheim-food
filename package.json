@@ -12,13 +12,12 @@
 		"build": "set NODE_ENV=production&&webpack --config webpack.prod.js",
 		"test": "npx jest",
 		"clean": "node clean.js",
-		"csv2json-build": "rm vhdata-csv2json.cjs & rm vhdata-csv2json.js & tsc --esModuleInterop vhdata-csv2json && ren vhdata-csv2json.js vhdata-csv2json.cjs && node vhdata-csv2json.cjs"
+		"csv2json": "npx ts-node vhdata-csv2json.ts"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"devDependencies": {		
-		"csv-parser": "^3.0.0",
+	"devDependencies": {
 		"@types/jest": "^29.5.12",
 		"@types/jquery": "^3.5.30",
 		"@types/tabulator-tables": "^5.5.1",
@@ -27,6 +26,7 @@
 		"clean-webpack-plugin": "^4.0.0",
 		"copy-webpack-plugin": "^12.0.2",
 		"css-loader": "^7.1.2",
+		"csv-parser": "^3.0.0",
 		"eslint": "^9.9.1",
 		"eslint-webpack-plugin": "^4.2.0",
 		"fork-ts-checker-webpack-plugin": "^9.0.2",
@@ -37,7 +37,8 @@
 		"style-loader": "^4.0.0",
 		"ts-jest": "^29.2.5",
 		"ts-loader": "^9.5.1",
-		"typescript": "^5.5.4",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.3",
 		"webpack": "^5.94.0",
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^5.0.4"
