@@ -12,12 +12,13 @@
 		"build": "set NODE_ENV=production&&webpack --config webpack.prod.js",
 		"test": "npx jest",
 		"clean": "node clean.js",
-		"csv2json-build": "rm vhdata-csv2json.cjs & tsc --esModuleInterop vhdata-csv2json && ren vhdata-csv2json.js vhdata-csv2json.cjs && node vhdata-csv2json.cjs"
+		"csv2json-build": "rm vhdata-csv2json.cjs & rm vhdata-csv2json.js & tsc --esModuleInterop vhdata-csv2json && ren vhdata-csv2json.js vhdata-csv2json.cjs && node vhdata-csv2json.cjs"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"devDependencies": {
+	"devDependencies": {		
+		"csv-parser": "^3.0.0",
 		"@types/jest": "^29.5.12",
 		"@types/jquery": "^3.5.30",
 		"@types/tabulator-tables": "^5.5.1",
@@ -49,7 +50,6 @@
 	"dependencies": {
 		"@types/bootstrap-select": "^1.13.4",
 		"bootstrap-select": "^1.13.18",
-		"csv-parser": "^3.0.0",
 		"tabulator-tables": "^5.5.2"
 	}
 }

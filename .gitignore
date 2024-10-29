@@ -135,3 +135,4 @@ package-lock.json
 /.idea
 /valheim-food.json
 /src/.~lock.valheim-food.csv#
+/vhdata-csv2json.js

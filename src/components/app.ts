@@ -12,7 +12,8 @@ export enum FoodTypeShort {
 	Y = "Y",
 	W = "W",
 	B = "B",
-	M = "M"
+	M = "M",
+	F = "F"
 }
 
 export enum FoodType {
@@ -20,7 +21,8 @@ export enum FoodType {
 	red = "red",
 	white = "white",
 	blue = "blue",
-	mead = "mead"
+	mead = "mead",
+	feast = "feast"
 }
 
 export interface Food {
@@ -57,7 +59,7 @@ export interface FoodRow {
 
 // noinspection TypeScriptUnresolvedFunction
 export class App {
-	version = '1.7';
+	version = '1.8';
 
 	localStorageJsonName = "valheim-food";
 
@@ -187,6 +189,9 @@ export class App {
 		for (const [name, food] of Object.entries(valheimFood.food)) {
 			let ft: FoodTypeShort;
 			switch (food.type) {
+				case FoodType.feast:
+					ft = FoodTypeShort.F;
+					break;
 				case FoodType.mead:
 					ft = FoodTypeShort.M;
 					break;
@@ -316,14 +321,14 @@ export class App {
 		(<HTMLButtonElement>document.getElementById("filter-clear")).addEventListener("click", (event: MouseEvent) => {
 			nameFilter.val('');
 
-			(tierFilter as any).selectpicker('val', ['1', '2', '3', '4', '5', '6']);
+			(tierFilter as any).selectpicker('val', ['1', '2', '3', '4', '5', '6', '7']);
 
 			(starredFilter as any).selectpicker('val', ['y', 'n']);
 			hpFilter.val('');
 			staminaFilter.val('');
 			eitrFilter.val('');
 
-			(typeFilter as any).selectpicker('val', ['W', 'Y', 'R', 'B', 'M']);
+			(typeFilter as any).selectpicker('val', ['W', 'Y', 'R', 'B', 'M', 'F']);
 
 			(hpsFilter as any).selectpicker('val', '');
 
@@ -423,6 +428,8 @@ export class App {
 					return `<span title='white' style='background-color:#dddddd;color:black;display:block;width:100%;height:100%'>W</span>`;
 				} else if (cellValue == "M") {
 					return `<span title='mead' style='background-color:#ffdbb6;color:black;display:block;width:100%;height:100%'>M</span>`;
+				} else if (cellValue == "F") {
+					return `<span title='feast' style='background-color:#bbbbbb;color:black;display:block;width:100%;height:100%'>F</span>`;
 				} else {
 					return cellValue;
 				}
@@ -471,11 +478,14 @@ export class App {
 			resizableRows: false, // this option takes a boolean value (default = false)
 			selectable: true, //make rows selectable
 			columns: columDefs,
-			rowHeight: 40,
+			//rowHeight: 40,
 		};
 		this.table = new Tabulator("#valheim-food-table", options);
 
-		this.table.on("rowSelectionChanged", (data: object[], rows: RowComponent[]) => {
+
+		this.table.on("rowSelectionChanged", () => {
+			const rows: RowComponent[] = this.table.getSelectedRows();
+		/*this.table.on("rowSelectionChanged", (data: object[], rows: RowComponent[]) => {*/
 			if (rows.length == 0) {
 				$('#totalPoints').val('');
 			} else if (rows.length > 3) {

@@ -15,7 +15,7 @@ class Food {
 }
 
 class VHData {
-	tiers: string[] = ["meadows", "black forest", "swamp", "mountain", "plains", "mistlands"];
+	tiers: string[] = ["meadows", "black forest", "swamp", "mountain", "plains", "mistlands", "ashlands"];
 
 	resourceTiers: string[][] = [
 		"raspberries\thoney\tneck tail\tboar meat\tdeer meat\tfish\tgreydwarf eye\tmushroom\tdandelion\tcoal".split("\t").map((s) => s.trim()), // 1 meadows
