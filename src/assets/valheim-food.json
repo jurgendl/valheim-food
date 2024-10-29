@@ -197,6 +197,22 @@
         "mushroom": 1
       }
     },
+    "whole roasted meadow boar": {
+      "name": "whole roasted meadow boar",
+      "tier": 1,
+      "starred": true,
+      "hp": 35,
+      "stamina": 35,
+      "eitr": 0,
+      "type": "feast",
+      "hpPerSecond": 2,
+      "durationInMinutes": 50,
+      "resources": {
+        "deer meat": 0.7,
+        "dandelion": 0.4,
+        "woodland herb blend": 0.1
+      }
+    },
     "blueberries": {
       "name": "blueberries",
       "tier": 2,
@@ -342,6 +358,25 @@
         "blueberries": 5
       }
     },
+    "black forest buffet platter": {
+      "name": "black forest buffet platter",
+      "tier": 2,
+      "starred": true,
+      "hp": 35,
+      "stamina": 35,
+      "eitr": 0,
+      "type": "feast",
+      "hpPerSecond": 3,
+      "durationInMinutes": 50,
+      "resources": {
+        "raspberries": 0.8,
+        "deer meat": 0.3,
+        "blueberries": 0.9,
+        "carrot": 0.3,
+        "thistle": 0.5,
+        "woodland herb blend": 0.1
+      }
+    },
     "turnip stew": {
       "name": "turnip stew",
       "tier": 3,
@@ -477,6 +512,94 @@
         "bloodbag": 4
       }
     },
+    "berserkir mead": {
+      "name": "berserkir mead",
+      "tier": 3,
+      "starred": false,
+      "eitr": 0,
+      "type": "mead",
+      "durationInMinutes": 0.33,
+      "resources": {
+        "mushroom": 3.33,
+        "yellow mushroom": 3.3,
+        "toadstool": 0.33
+      }
+    },
+    "tonic of ratatosk": {
+      "name": "tonic of ratatosk",
+      "tier": 3,
+      "starred": false,
+      "eitr": 0,
+      "type": "mead",
+      "durationInMinutes": 10,
+      "resources": {
+        "honey": 1.66,
+        "blueberries": 1.66,
+        "cured squirrel hamstring": 0.16
+      }
+    },
+    "draught of vananidir": {
+      "name": "draught of vananidir",
+      "tier": 3,
+      "starred": false,
+      "eitr": 0,
+      "type": "mead",
+      "durationInMinutes": 5,
+      "resources": {
+        "dandelion": 1.66,
+        "perch": 0.33,
+        "fresh seaweed": 0.16
+      }
+    },
+    "mead of troll endurance": {
+      "name": "mead of troll endurance",
+      "tier": 3,
+      "starred": false,
+      "eitr": 0,
+      "type": "mead",
+      "durationInMinutes": 5,
+      "resources": {
+        "honey": 1.66,
+        "trollfish": 0.33,
+        "powdered dragon eggshells": 0.16
+      }
+    },
+    "swamp dweller's delight": {
+      "name": "swamp dweller's delight",
+      "tier": 3,
+      "starred": true,
+      "hp": 35,
+      "stamina": 35,
+      "eitr": 0,
+      "type": "feast",
+      "hpPerSecond": 3,
+      "durationInMinutes": 50,
+      "resources": {
+        "boar meat": 0.4,
+        "thistle": 0.2,
+        "turnip": 0.6,
+        "entrails": 0.8,
+        "bloodbag": 0.4,
+        "woodland herb blend": 0.1
+      }
+    },
+    "sailor's bounty": {
+      "name": "sailor's bounty",
+      "tier": 3,
+      "starred": false,
+      "hp": 45,
+      "stamina": 45,
+      "eitr": 0,
+      "type": "feast",
+      "hpPerSecond": 3,
+      "durationInMinutes": 50,
+      "resources": {
+        "fish": 0.5,
+        "thistle": 0.4,
+        "serpent meat": 0.2,
+        "seafarer's herbs": 0.1
+      }
+    },
     "onion": {
       "name": "onion",
       "tier": 4,
@@ -563,6 +686,37 @@
       "resources": {
         "greydwarf eye": 3,
         "freeze gland": 1
+      }
+    },
+    "brew of animal whispers": {
+      "name": "brew of animal whispers",
+      "tier": 4,
+      "starred": false,
+      "eitr": 0,
+      "type": "mead",
+      "durationInMinutes": 10,
+      "resources": {
+        "carrot": 1.66,
+        "pungent pebbles": 0.16,
+        "onion": 0.83
+      }
+    },
+    "hearty mountain logger's stew": {
+      "name": "hearty mountain logger's stew",
+      "tier": 4,
+      "starred": true,
+      "hp": 45,
+      "stamina": 45,
+      "eitr": 0,
+      "type": "feast",
+      "hpPerSecond": 3,
+      "durationInMinutes": 50,
+      "resources": {
+        "mushroom": 0.4,
+        "carrot": 0.4,
+        "mountain peak pepper": 0.1,
+        "onion": 1.4,
+        "wolf meat": 0.2
       }
     },
     "cloudberries": {
@@ -677,6 +831,36 @@
         "raspberries": 10,
         "yellow mushroom": 10,
         "cloudberries ": 10
+      }
+    },
+    "anti-sting concoction": {
+      "name": "anti-sting concoction",
+      "tier": 5,
+      "starred": false,
+      "eitr": 0,
+      "type": "mead",
+      "durationInMinutes": 10,
+      "resources": {
+        "fragrant bundle": 0.16,
+        "cloudberries ": 1.66,
+        "grouper": 0.5
+      }
+    },
+    "plains pie picnic": {
+      "name": "plains pie picnic",
+      "tier": 5,
+      "starred": true,
+      "hp": 55,
+      "stamina": 55,
+      "eitr": 0,
+      "type": "feast",
+      "hpPerSecond": 4,
+      "durationInMinutes": 50,
+      "resources": {
+        "grasslands herbalist harvest": 0.1,
+        "cloudberries ": 0.9,
+        "lox meat": 0.4,
+        "barley": 2.3
       }
     },
     "cooked egg": {
@@ -959,6 +1143,40 @@
         "sap": 5
       }
     },
+    "lightfoot mead": {
+      "name": "lightfoot mead",
+      "tier": 6,
+      "starred": false,
+      "eitr": 0,
+      "type": "mead",
+      "durationInMinutes": 10,
+      "resources": {
+        "feathers": 0.83,
+        "magecap ": 0.83,
+        "scale hide": 0.33
+      }
+    },
+    "mushrooms galore � la mistlands": {
+      "name": "mushrooms galore � la mistlands",
+      "tier": 6,
+      "starred": true,
+      "hp": 65,
+      "stamina": 65,
+      "eitr": 35,
+      "type": "blue",
+      "hpPerSecond": 5,
+      "durationInMinutes": 50,
+      "resources": {
+        "carrot": 0.2,
+        "herbs of the hidden hills": 0.1,
+        "barley": 0.3,
+        "jotun puffs ": 0.3,
+        "seeker meat ": 0.3,
+        "hare meat": 0.1,
+        "sap": 0.4,
+        "royal jelly": 0.2
+      }
+    },
     "fiddlehead": {
       "name": "fiddlehead",
       "tier": 7,
@@ -1189,97 +1407,6 @@
         "smoke puff": 2
       }
     },
-    "berserkir mead": {
-      "name": "berserkir mead",
-      "tier": 3,
-      "starred": false,
-      "eitr": 0,
-      "type": "mead",
-      "durationInMinutes": 0.33,
-      "resources": {
-        "mushroom": 3.33,
-        "yellow mushroom": 3.3,
-        "toadstool": 0.33
-      }
-    },
-    "tonic of ratatosk": {
-      "name": "tonic of ratatosk",
-      "tier": 3,
-      "starred": false,
-      "eitr": 0,
-      "type": "mead",
-      "durationInMinutes": 10,
-      "resources": {
-        "honey": 1.66,
-        "blueberries": 1.66,
-        "cured squirrel hamstring": 0.16
-      }
-    },
-    "lightfoot mead": {
-      "name": "lightfoot mead",
-      "tier": 6,
-      "starred": false,
-      "eitr": 0,
-      "type": "mead",
-      "durationInMinutes": 10,
-      "resources": {
-        "feathers": 0.83,
-        "magecap ": 0.83,
-        "scale hide": 0.33
-      }
-    },
-    "draught of vananidir": {
-      "name": "draught of vananidir",
-      "tier": 3,
-      "starred": false,
-      "eitr": 0,
-      "type": "mead",
-      "durationInMinutes": 5,
-      "resources": {
-        "dandelion": 1.66,
-        "perch": 0.33,
-        "fresh seaweed": 0.16
-      }
-    },
-    "mead of troll endurance": {
-      "name": "mead of troll endurance",
-      "tier": 3,
-      "starred": false,
-      "eitr": 0,
-      "type": "mead",
-      "durationInMinutes": 5,
-      "resources": {
-        "honey": 1.66,
-        "trollfish": 0.33,
-        "powdered dragon eggshells": 0.16
-      }
-    },
-    "brew of animal whispers": {
-      "name": "brew of animal whispers",
-      "tier": 4,
-      "starred": false,
-      "eitr": 0,
-      "type": "mead",
-      "durationInMinutes": 10,
-      "resources": {
-        "carrot": 1.66,
-        "pungent pebbles": 0.16,
-        "onion": 0.83
-      }
-    },
-    "anti-sting concoction": {
-      "name": "anti-sting concoction",
-      "tier": 5,
-      "starred": false,
-      "eitr": 0,
-      "type": "mead",
-      "durationInMinutes": 10,
-      "resources": {
-        "fragrant bundle": 0.16,
-        "cloudberries ": 1.66,
-        "grouper": 0.5
-      }
-    },
     "ashlands gourmet bowl": {
       "name": "ashlands gourmet bowl",
       "tier": 7,
@@ -1297,133 +1424,6 @@
         "fiddlehead": 0.6,
         "vineberry cluster": 0.5,
         "asksvin tail": 0.3
-      }
-    },
-    "mushrooms galore � la mistlands": {
-      "name": "mushrooms galore � la mistlands",
-      "tier": 6,
-      "starred": true,
-      "hp": 65,
-      "stamina": 65,
-      "eitr": 35,
-      "type": "blue",
-      "hpPerSecond": 5,
-      "durationInMinutes": 50,
-      "resources": {
-        "carrot": 0.2,
-        "herbs of the hidden hills": 0.1,
-        "barley": 0.3,
-        "jotun puffs ": 0.3,
-        "seeker meat ": 0.3,
-        "hare meat": 0.1,
-        "sap": 0.4,
-        "royal jelly": 0.2
-      }
-    },
-    "plains pie picnic": {
-      "name": "plains pie picnic",
-      "tier": 5,
-      "starred": true,
-      "hp": 55,
-      "stamina": 55,
-      "eitr": 0,
-      "type": "feast",
-      "hpPerSecond": 4,
-      "durationInMinutes": 50,
-      "resources": {
-        "grasslands herbalist harvest": 0.1,
-        "cloudberries ": 0.9,
-        "lox meat": 0.4,
-        "barley": 2.3
-      }
-    },
-    "hearty mountain logger's stew": {
-      "name": "hearty mountain logger's stew",
-      "tier": 4,
-      "starred": true,
-      "hp": 45,
-      "stamina": 45,
-      "eitr": 0,
-      "type": "feast",
-      "hpPerSecond": 3,
-      "durationInMinutes": 50,
-      "resources": {
-        "mushroom": 0.4,
-        "carrot": 0.4,
-        "mountain peak pepper": 0.1,
-        "onion": 1.4,
-        "wolf meat": 0.2
-      }
-    },
-    "sailor's bounty": {
-      "name": "sailor's bounty",
-      "tier": 3,
-      "starred": false,
-      "hp": 45,
-      "stamina": 45,
-      "eitr": 0,
-      "type": "feast",
-      "hpPerSecond": 3,
-      "durationInMinutes": 50,
-      "resources": {
-        "fish": 0.5,
-        "thistle": 0.4,
-        "serpent meat": 0.2,
-        "seafarer's herbs": 0.1
-      }
-    },
-    "swamp dweller's delight": {
-      "name": "swamp dweller's delight",
-      "tier": 3,
-      "starred": true,
-      "hp": 35,
-      "stamina": 35,
-      "eitr": 0,
-      "type": "feast",
-      "hpPerSecond": 3,
-      "durationInMinutes": 50,
-      "resources": {
-        "boar meat": 0.4,
-        "thistle": 0.2,
-        "turnip": 0.6,
-        "entrails": 0.8,
-        "bloodbag": 0.4,
-        "woodland herb blend": 0.1
-      }
-    },
-    "black forest buffet platter": {
-      "name": "black forest buffet platter",
-      "tier": 2,
-      "starred": true,
-      "hp": 35,
-      "stamina": 35,
-      "eitr": 0,
-      "type": "feast",
-      "hpPerSecond": 3,
-      "durationInMinutes": 50,
-      "resources": {
-        "raspberries": 0.8,
-        "deer meat": 0.3,
-        "blueberries": 0.9,
-        "carrot": 0.3,
-        "thistle": 0.5,
-        "woodland herb blend": 0.1
-      }
-    },
-    "whole roasted meadow boar": {
-      "name": "whole roasted meadow boar",
-      "tier": 1,
-      "starred": true,
-      "hp": 35,
-      "stamina": 35,
-      "eitr": 0,
-      "type": "feast",
-      "hpPerSecond": 2,
-      "durationInMinutes": 50,
-      "resources": {
-        "deer meat": 0.7,
-        "dandelion": 0.4,
-        "woodland herb blend": 0.1
       }
     }
   }
