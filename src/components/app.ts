@@ -253,7 +253,7 @@ export class App {
 			$('#totalPoints').val('');
 			//
 			for (const resource of this.resources) {
-				$("#check_" + resource.replace(' ', '_')).prop('checked', true);
+				$("#check_" + resource.replace(' ', '_').replace("'", '_')).prop('checked', true);
 			}
 		}
 
@@ -542,7 +542,7 @@ export class App {
 				}
 				for (const resource /* string */ of this.resources) {
 					const styleTagDisabled: boolean = keep.indexOf(resource) != -1;
-					$('#check_' + resource.replace(' ', '_')).prop('checked', styleTagDisabled);
+					$('#check_' + resource.replace(' ', '_').replace("'", '_')).prop('checked', styleTagDisabled);
 					(<HTMLStyleElement>document.getElementById(`style-${resource}`)).disabled = styleTagDisabled;
 				}
 			}
