@@ -1,9 +1,9 @@
 // npm install -D ts-node typescript
 // npx ts-node vhdata-csv2json.ts
 
-/*import * as fs from 'fs';
-import csv from 'csv-parser';*/
+// @ts-ignore
 const fs = require('fs');
+// @ts-ignore
 const csv = require('csv-parser');
 
 class Food {
@@ -43,7 +43,7 @@ class VHData {
 	food: Record<string, Food> = {};
 }
 
-function convertCSVToJson() {
+(() => {
 	try {
 		console.log('Converting CSV to JSON...');
 
@@ -146,6 +146,4 @@ function convertCSVToJson() {
 	} catch (ex) {
 		console.error('Error during conversion:', ex);
 	}
-}
-
-convertCSVToJson();
+})();

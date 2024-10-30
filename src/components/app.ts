@@ -159,7 +159,7 @@ export class App {
 
 	buildResourceChecks(valheimFood: ValheimFood) {
 		for (const resource of this.resources) {
-			const fixedName = resource.replace(' ', '_');
+			const fixedName = resource.replace(' ', '_').replace("'", '_');
 			const template = `<div class='col-xl-1 col-lg-2 col-md-3 col-sm-4 col-4'><div style='width:unset;display:inline;' class='imgcheck input-group input-group-sm'><label class='checkbox-inline' for='check_${fixedName}'><input checked='checked' value='${resource}' style='display: none;' type='checkbox' id='check_${fixedName}'><img id='is_${fixedName}' width='32' height='32' src='assets/images/${resource}.png'>&nbsp;<span style='font-size:11px' id='lbl_${fixedName}'>${resource}</span></label></div></div>`
 			//
 			$('#resourceChecks').append(template);

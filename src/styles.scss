@@ -1,4 +1,4 @@
-@import 'tabulator-dark-mode.scss';
+@use 'tabulator-dark-mode.scss';
 
 body {
 	transition: color 0.2s ease-out, background 0.2s ease-out;
@@ -99,49 +99,7 @@ body {
 }
 
 
-.tabulator-col[tabulator-field="raspberries"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="honey"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="neck tail"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="boar meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="deer meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="fish"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="greydwarf eye"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="mushroom"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="dandelion"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="coal"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="blueberries"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="carrot"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="yellow mushroom"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="thistle"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="turnip"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="ooze"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="entrails"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="bloodbag"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="serpent meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="onion"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="wolf meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="freeze gland"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="cloudberries"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="lox meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="barley"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="egg"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="chicken meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="magecap"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="jotun puffs"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="seeker meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="hare meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="blood clot"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="sap"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="royal jelly"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="anglerfish"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="fiddlehead"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="smoke puff"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="vineberry cluster"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="asksvin tail"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="volture meat"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="volture egg"] .tabulator-col-title::before,
-.tabulator-col[tabulator-field="bonemaw meat"] .tabulator-col-title::before
-{
+.tabulator-col[tabulator-field] .tabulator-col-title::before {
 	content: '';
 	width: 32px;
 	height: 32px;

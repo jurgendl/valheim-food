@@ -12,7 +12,8 @@
 		"build": "set NODE_ENV=production&&webpack --config webpack.prod.js",
 		"test": "npx jest",
 		"clean": "node clean.js",
-		"csv2json": "npx ts-node vhdata-csv2json.ts"
+		"csv2json": "npx ts-node vhdata-csv2json.ts",
+		"images2css": "npx ts-node images-to-css.ts"
 	},
 	"keywords": [],
 	"author": "",
