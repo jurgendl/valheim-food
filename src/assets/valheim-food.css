@@ -338,8 +338,8 @@
 	background-image: url("images/mushroom.png");
 }
 
-.tabulator-col[tabulator-field="mushrooms galore á la mistlands"] .tabulator-col-title::before {
-	background-image: url("images/mushrooms galore á la mistlands.png");
+.tabulator-col[tabulator-field="mushrooms galore à la mistlands"] .tabulator-col-title::before {
+	background-image: url("images/mushrooms galore à la mistlands.png");
 }
 
 .tabulator-col[tabulator-field="neck tail"] .tabulator-col-title::before {
