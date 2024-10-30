@@ -429,7 +429,7 @@ export class App {
 				} else if (cellValue == "M") {
 					return `<span title='mead' style='background-color:#ffdbb6;color:black;display:block;width:100%;height:100%'>M</span>`;
 				} else if (cellValue == "F") {
-					return `<span title='feast' style='background-color:#bbbbbb;color:black;display:block;width:100%;height:100%'>F</span>`;
+					return `<span title='feast' style='background-color:#dccbff;color:black;display:block;width:100%;height:100%'>F</span>`;
 				} else {
 					return cellValue;
 				}
