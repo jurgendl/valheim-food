@@ -20,7 +20,15 @@ class Food {
 }
 
 class VHData {
-	tiers: string[] = ["meadows", "black forest", "swamp", "mountain", "plains", "mistlands", "ashlands"];
+	tiers: string[] = [
+		"meadows", //1
+		"black forest", //2
+		"swamp", //3
+		"mountain", //4
+		"plains", //5
+		"mistlands", //6
+		"ashlands"//7
+	];
 
 	resourceTiers: string[][] = [
 		"raspberries\thoney\tneck tail\tboar meat\tdeer meat\tfish\tgreydwarf eye\tmushroom\tdandelion\tcoal\tfeathers\tperch".split("\t").map((s) => s.trim()), // 1 meadows
@@ -40,6 +48,7 @@ function convertCSVToJson() {
 		console.log('Converting CSV to JSON...');
 
 		const data = new VHData();
+		//console.log(data);
 		const csvHeaders: string[] = [];
 		fs.createReadStream(`./src/valheim-food.csv`).pipe(csv())
 			.on('headers', (headers: any) => {
@@ -83,19 +92,19 @@ function convertCSVToJson() {
 				}
 
 				// 7 "type"
-				const type = row.type
-				if (type.includes(':')) {
-					food.type = 'blue';
-					food.eitr = parseInt(type.split(':')[1].trim());
-				} else {
-					if (type == "y") food.type = 'yellow';
-					else if (type == "w") food.type = 'white';
-					else if (type == "r") food.type = 'red';
-					else if (type == "m") food.type = 'mead';
-					else if (type == "f") food.type = 'feast';
-					else throw new Error(`Invalid type ${type}`);
-					food.eitr = 0;
-				}
+				const type: string = row.type
+				if (type.charAt(0) == "y") food.type = 'yellow';
+				else if (type.charAt(0) == "w") food.type = 'white';
+				else if (type.charAt(0) == "b") food.type = 'blue';
+				else if (type.charAt(0) == "r") food.type = 'red';
+				else if (type.charAt(0) == "m") food.type = 'mead';
+				else if (type.charAt(0) == "f") food.type = 'feast';
+				else throw new Error(`Invalid type ${type}`);
+
+				// 7 "eitr"
+				if (type.includes(':')) food.eitr = parseInt(type.split(':')[1].trim());
+				else food.eitr = 0;
+
 
 				// 8 "hp/s"
 				const hpPerSecond = row['hp/s'];
@@ -129,6 +138,7 @@ function convertCSVToJson() {
 				//console.log(food);
 			})
 			.on('end', () => {
+				//console.log(data);
 				const outputFile = `./src/assets/valheim-food.json`;
 				fs.writeFileSync(outputFile, JSON.stringify(data, null, 2));
 				console.log('Conversion completed successfully.');

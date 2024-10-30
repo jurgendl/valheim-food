@@ -1163,7 +1163,7 @@
       "hp": 65,
       "stamina": 65,
       "eitr": 35,
-      "type": "blue",
+      "type": "feast",
       "hpPerSecond": 5,
       "durationInMinutes": 50,
       "resources": {
@@ -1414,7 +1414,7 @@
       "hp": 75,
       "stamina": 75,
       "eitr": 38,
-      "type": "blue",
+      "type": "feast",
       "hpPerSecond": 6,
       "durationInMinutes": 50,
       "resources": {
